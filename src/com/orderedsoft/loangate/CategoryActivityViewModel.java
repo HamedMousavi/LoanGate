@@ -14,7 +14,7 @@ public class CategoryActivityViewModel
 	}
 
 	
-	public void ReloadCategories() 
+	public void ReloadCategories()
 	{
 		// UNDONE
 		// Call service

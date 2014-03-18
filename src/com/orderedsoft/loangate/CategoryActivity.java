@@ -41,12 +41,11 @@ public class CategoryActivity extends Activity
     	btnSync.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Model.ReloadCategories();
-				_categoriesAdapter.notifyDataSetChanged();
+				ReloadCategories();
 			}
 		});
     	
-    	// Bind settings page load
+    	// Bind settings page
     	Button btnSettings = (Button)findViewById(R.id.btn_settings);
     	btnSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -66,4 +65,10 @@ public class CategoryActivity extends Activity
         return true;
     }
     
+
+	protected void ReloadCategories() 
+	{
+		Model.ReloadCategories();
+		_categoriesAdapter.notifyDataSetChanged();
+	}
 }
