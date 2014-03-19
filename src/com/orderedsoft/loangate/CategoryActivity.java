@@ -1,6 +1,8 @@
 package com.orderedsoft.loangate;
 
 
+import com.orderedsoft.loangate.serviceProxies.LoanCategory;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +17,7 @@ public class CategoryActivity extends Activity
 {
 	
 	public CategoryActivityViewModel Model;
-	private ArrayAdapter<String> _categoriesAdapter;
+	private ArrayAdapter<LoanCategory> _categoriesAdapter;
 
 	
     @Override
@@ -32,7 +34,8 @@ public class CategoryActivity extends Activity
     private void SetupBindings() {
 
     	// Bind ListView to Categories
-    	_categoriesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Model.Categories);
+    	_categoriesAdapter = new ArrayAdapter<LoanCategory>(
+    			this, android.R.layout.simple_list_item_1, Model.getCategories());
     	ListView lvwCategories = (ListView)findViewById(R.id.lvw_categories);
 		lvwCategories.setAdapter(_categoriesAdapter);
         

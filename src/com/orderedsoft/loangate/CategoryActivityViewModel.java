@@ -1,29 +1,41 @@
 package com.orderedsoft.loangate;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import com.orderedsoft.loangate.serviceProxies.CategoriesProxy;
+import com.orderedsoft.loangate.serviceProxies.LoanCategory;
 
 public class CategoryActivityViewModel 
 {
 
-	public ArrayList<String> Categories;
+	private List<LoanCategory> _categories;
 	
 	
 	public CategoryActivityViewModel()
 	{
-		Categories = new ArrayList<String>();
 	}
 
 	
 	public void ReloadCategories()
 	{
-		// UNDONE
-		// Call service
-		// Get data
-		Categories.clear();
-    	Categories.add("Hamed 1");
-		Categories.add("Hamed 2");
-		Categories.add("Hamed 3");
-		Categories.add("Hamed 4");
+		CategoriesProxy proxy = new CategoriesProxy("http://Hamed-Laptop/LoanGate/api/loancategories");
+		setCategories(proxy.LoadCategories());
+	}
+
+
+	/**
+	 * @return the _categories
+	 */
+	public List<LoanCategory> getCategories() {
+		return _categories;
+	}
+
+
+	/**
+	 * @param _categories the _categories to set
+	 */
+	private void setCategories(List<LoanCategory> _categories) {
+		this._categories = _categories;
 	}
 
 }
