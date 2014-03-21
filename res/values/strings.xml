@@ -9,5 +9,6 @@
     <string name="sync">Synchronize</string>
     <string name="notify">Reminder</string>
     <string name="settings">Settings</string>
+    <string name="category_icon_description">Category Icon</string>
 
 </resources>

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import HLib.Convert;
+import HLib.WebServiceHandler;
 
 
-public class CategoryXmlHandler extends DefaultHandler 
+public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 {
 	
 	private static final String NAME = "Name";
@@ -35,6 +35,7 @@ public class CategoryXmlHandler extends DefaultHandler
 			e.printStackTrace();
 		}
 		_categories = new ArrayList<LoanCategory>();
+		_chars = new StringBuilder();
 	}
 
 
@@ -107,6 +108,9 @@ public class CategoryXmlHandler extends DefaultHandler
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 
 		// Clear _chars
@@ -121,7 +125,7 @@ public class CategoryXmlHandler extends DefaultHandler
 		try {
 			super.characters(text, start, length);
 			
-			_chars.append(text);
+			_chars.append(text, start, length);
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,7 +133,8 @@ public class CategoryXmlHandler extends DefaultHandler
 	}	
 	
 
-	public List<LoanCategory> getMessages() {
+	public List<LoanCategory> getResults() {
 		return _categories;
 	}
+
 }

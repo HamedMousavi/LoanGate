@@ -3,6 +3,7 @@ package com.orderedsoft.loangate;
 
 import com.orderedsoft.loangate.serviceProxies.LoanCategory;
 
+import HLib.IObserver;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +14,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class CategoryActivity extends Activity 
+public class CategoryActivity extends Activity implements IObserver
 {
 	
-	public CategoryActivityViewModel Model;
+	public CategoryActivityViewModel Model = null;
 	private ArrayAdapter<LoanCategory> _categoriesAdapter;
 
 	
@@ -25,7 +26,7 @@ public class CategoryActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         
-        if (Model == null) Model = new CategoryActivityViewModel();
+        if (Model == null) Model = new CategoryActivityViewModel(this);
 
         SetupBindings();
     }
@@ -33,12 +34,6 @@ public class CategoryActivity extends Activity
 
     private void SetupBindings() {
 
-    	// Bind ListView to Categories
-    	_categoriesAdapter = new ArrayAdapter<LoanCategory>(
-    			this, android.R.layout.simple_list_item_1, Model.getCategories());
-    	ListView lvwCategories = (ListView)findViewById(R.id.lvw_categories);
-		lvwCategories.setAdapter(_categoriesAdapter);
-        
 		// Bind Sync click event
     	Button btnSync = (Button)findViewById(R.id.btn_sync);
     	btnSync.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +67,30 @@ public class CategoryActivity extends Activity
 	protected void ReloadCategories() 
 	{
 		Model.ReloadCategories();
-		_categoriesAdapter.notifyDataSetChanged();
+	}
+	
+	
+	protected void ReBindCategories()
+	{
+    	// Bind ListView to Categories
+		if (Model.getCategories() != null) {
+	    	_categoriesAdapter = new CategoryAdapter(
+	    			this, R.layout.category_list_item, Model.getCategories());
+	    	ListView lvwCategories = (ListView)findViewById(R.id.lvw_categories);
+			lvwCategories.setAdapter(_categoriesAdapter);
+			
+			_categoriesAdapter.notifyDataSetChanged();
+		}
+		else
+		{
+			_categoriesAdapter = null;
+		}
+	}
+	
+	
+	/** UNDONE: REPLACE THIS WITH BEANS PROPERTY CHANGED EVENT */
+	public void OnSubjectChanged(Object observable, Object params)
+	{
+		ReBindCategories();
 	}
 }

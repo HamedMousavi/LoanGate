@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 
@@ -17,7 +18,7 @@ public class Convert
 	{
 		if (_dateFormatter == null)
 		{
-			_dateFormatter = SimpleDateFormat.getDateTimeInstance();
+			_dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 			_dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		}
 		
@@ -34,5 +35,11 @@ public class Convert
 	public static int ToInt(String valueStr) 
 	{
 		return Integer.parseInt(valueStr);
+	}
+
+
+	public static CharSequence ToString(Date date) 
+	{
+		return String.format("%tD", date);
 	}
 }
