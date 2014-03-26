@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class CategoryActivity extends Activity implements IObserver
+public class CategoryActivity extends Activity  implements IObserver
 {
 	
 	public CategoryActivityViewModel Model = null;
@@ -22,17 +22,26 @@ public class CategoryActivity extends Activity implements IObserver
 
 	
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         
+        if (null != savedInstanceState) restoreState(savedInstanceState);
+        
+        // Create & display view 
         if (Model == null) Model = new CategoryActivityViewModel(this);
-
+        
         SetupBindings();
     }
 
 
-    private void SetupBindings() {
+    private void restoreState(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+	}
+
+
+	private void SetupBindings() {
 
 		// Bind Sync click event
     	Button btnSync = (Button)findViewById(R.id.btn_sync);

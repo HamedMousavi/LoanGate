@@ -10,5 +10,6 @@
     <string name="notify">Reminder</string>
     <string name="settings">Settings</string>
     <string name="category_icon_description">Category Icon</string>
+    <string name="separator">Seperator line</string>
 
 </resources>
