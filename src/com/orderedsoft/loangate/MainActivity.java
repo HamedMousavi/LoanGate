@@ -1,16 +1,18 @@
 package com.orderedsoft.loangate;
 
 
-import com.orderedsoft.loangate.navigation.TabFragment;
+import com.orderedsoft.loangate.navigation.CategoryListTabFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 
 
 public class MainActivity extends FragmentActivity 
 {
 
+	 private FragmentTabHost _tabHost;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
     {
@@ -18,15 +20,15 @@ public class MainActivity extends FragmentActivity
         
     	setContentView(R.layout.activity_main);
     	
-    	EnsureTabsVisible(savedInstanceState);
+    	SetupTabLayout(savedInstanceState);
 	}
 
 	
-	private void EnsureTabsVisible(Bundle savedInstanceState)
+	private void SetupTabLayout(Bundle savedInstanceState)
 	{
 		// Check that the activity is using the layout version with
         // the fragment_container FrameLayout
-        if (findViewById(R.id.tab_fragment) != null) 
+        if (findViewById(R.id.tab_main_content) != null) 
         {
 
             // However, if we're being restored from a previous state,
@@ -36,17 +38,35 @@ public class MainActivity extends FragmentActivity
                 return;
             }
 
-            // Create a new Fragment to be placed in the activity layout
-            TabFragment firstFragment = new TabFragment();
-            
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            Intent intent = getIntent();
-            firstFragment.setArguments(intent.getExtras());
-            
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.tab_fragment, firstFragment).commit();	
-        }
+            _tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
+            _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
+            _tabHost.addTab(
+            		_tabHost.newTabSpec("tab1").
+            			setIndicator(
+            					getResources().getText(R.string.list), 
+            					getResources().getDrawable(R.drawable.icon1)),
+                    CategoryListTabFragment.class, null);
+
+            _tabHost.addTab(
+            		_tabHost.newTabSpec("tab2").
+            			setIndicator(
+            					getResources().getText(R.string.search), 
+            					getResources().getDrawable(R.drawable.icon1)),
+                    CategoryListTabFragment.class, null);
+
+            _tabHost.addTab(
+            		_tabHost.newTabSpec("tab3").
+        			setIndicator(
+        					getResources().getText(R.string.sync), 
+        					getResources().getDrawable(R.drawable.icon1)),
+                    CategoryListTabFragment.class, null);
+
+            _tabHost.addTab(
+            		_tabHost.newTabSpec("tab4").
+        			setIndicator(
+        					getResources().getText(R.string.settings), 
+        					getResources().getDrawable(R.drawable.icon1)),
+                    CategoryListTabFragment.class, null);
+}
 	}
 }

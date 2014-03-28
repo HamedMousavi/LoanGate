@@ -4,9 +4,9 @@ package com.orderedsoft.loangate;
 import com.orderedsoft.loangate.serviceProxies.LoanCategory;
 
 import HLib.IObserver;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class CategoryActivity extends Activity  implements IObserver
+public class CategoryActivity extends FragmentActivity  implements IObserver
 {
 	
 	public CategoryActivityViewModel Model = null;
@@ -32,7 +32,9 @@ public class CategoryActivity extends Activity  implements IObserver
         // Create & display view 
         if (Model == null) Model = new CategoryActivityViewModel(this);
         
-        SetupBindings();
+        //SetupBindings();
+
+		ReloadCategories();
     }
 
 
