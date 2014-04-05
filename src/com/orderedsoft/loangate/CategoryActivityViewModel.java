@@ -57,4 +57,9 @@ public class CategoryActivityViewModel implements IObserver
 
 		setCategories(categories);
 	}
+
+
+	public LoanCategory getCategory(int position) {
+		return _categories.get(position);
+	}
 }

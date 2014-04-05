@@ -4,13 +4,10 @@ package com.orderedsoft.loangate;
 import com.orderedsoft.loangate.serviceProxies.LoanCategory;
 
 import HLib.IObserver;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -42,7 +39,7 @@ public class CategoryActivity extends FragmentActivity  implements IObserver
 		// TODO Auto-generated method stub
 	}
 
-
+/**
 	private void SetupBindings() {
 
 		// Bind Sync click event
@@ -65,6 +62,7 @@ public class CategoryActivity extends FragmentActivity  implements IObserver
 		});
     	
 	}
+	*/
 
 
 	@Override

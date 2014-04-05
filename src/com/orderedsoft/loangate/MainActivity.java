@@ -36,7 +36,6 @@ public class MainActivity extends FragmentActivity
         // the fragment_container FrameLayout
         if (findViewById(R.id.tab_main_content) != null) 
         {
-
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
@@ -85,7 +84,6 @@ public class MainActivity extends FragmentActivity
 		
 		ImageView iv = (ImageView) view.findViewById(R.id.ivwTabIcon);
 		iv.setImageDrawable(drawable);
-		
 
 		return view;
 	}
