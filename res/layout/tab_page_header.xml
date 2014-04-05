@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" 
+    android:background="@drawable/tab_header_selector">
+    
+     <LinearLayout
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" >
+        <ImageView
+            android:id="@+id/ivwTabIcon"
+            android:contentDescription="@string/category_icon_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+        
+    <TextView
+        android:id="@+id/tbxTabTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:text="@string/app_name" />
+    
+<!--     
+	<shape android:shape="rectangle">
+		<gradient android:startColor="#A8A8A8" android:centerColor="#7F7F7F"
+5	        android:endColor="#696969" android:angle="-90"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/tab_header_highlight_selector" />
+    </shape>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/background_dark" />
+     -->
+</LinearLayout>

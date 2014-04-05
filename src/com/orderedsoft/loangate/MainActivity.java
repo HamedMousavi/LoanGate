@@ -3,9 +3,15 @@ package com.orderedsoft.loangate;
 
 import com.orderedsoft.loangate.navigation.CategoryListTabFragment;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class MainActivity extends FragmentActivity 
@@ -42,31 +48,45 @@ public class MainActivity extends FragmentActivity
             _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab1").
-            			setIndicator(
+            			setIndicator(createTabView(_tabHost.getContext(),
             					getResources().getText(R.string.list), 
-            					getResources().getDrawable(R.drawable.icon1)),
+            					getResources().getDrawable(R.drawable.icon1))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab2").
-            			setIndicator(
+            			setIndicator(createTabView(_tabHost.getContext(),
             					getResources().getText(R.string.search), 
-            					getResources().getDrawable(R.drawable.icon1)),
+            					getResources().getDrawable(R.drawable.icon1))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab3").
-        			setIndicator(
+        			setIndicator(createTabView(_tabHost.getContext(),
         					getResources().getText(R.string.sync), 
-        					getResources().getDrawable(R.drawable.icon1)),
+        					getResources().getDrawable(R.drawable.icon1))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab4").
-        			setIndicator(
+        			setIndicator(createTabView(_tabHost.getContext(),
         					getResources().getText(R.string.settings), 
-        					getResources().getDrawable(R.drawable.icon1)),
+        					getResources().getDrawable(R.drawable.icon1))),
                     CategoryListTabFragment.class, null);
-}
+        }
+	}
+	
+
+	private View createTabView(Context context, CharSequence text, Drawable drawable) 
+	{
+		View view = LayoutInflater.from(context).inflate(R.layout.tab_page_header, null);
+		TextView tv = (TextView) view.findViewById(R.id.tbxTabTitle);
+		tv.setText(text);
+		
+		ImageView iv = (ImageView) view.findViewById(R.id.ivwTabIcon);
+		iv.setImageDrawable(drawable);
+		
+
+		return view;
 	}
 }
