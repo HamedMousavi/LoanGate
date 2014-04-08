@@ -1,4 +1,6 @@
-package com.orderedsoft.loangate;
+package com.orderedsoft.loangate.activities;
+import com.orderedsoft.loangate.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 

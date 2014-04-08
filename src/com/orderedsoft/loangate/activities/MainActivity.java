@@ -1,6 +1,7 @@
-package com.orderedsoft.loangate;
+package com.orderedsoft.loangate.activities;
 
 
+import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.navigation.CategoryListTabFragment;
 
 import android.content.Context;

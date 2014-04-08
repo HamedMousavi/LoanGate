@@ -1,4 +1,4 @@
-package com.orderedsoft.loangate.serviceProxies;
+package com.orderedsoft.loangate.models;
 
 import java.util.Date;
 

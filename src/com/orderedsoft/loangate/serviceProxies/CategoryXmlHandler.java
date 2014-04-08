@@ -7,6 +7,8 @@ import java.util.List;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import com.orderedsoft.loangate.models.LoanCategory;
+
 import HLib.Convert;
 import HLib.WebServiceHandler;
 

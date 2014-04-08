@@ -4,8 +4,8 @@ import java.util.List;
 
 import HLib.IObserver;
 
+import com.orderedsoft.loangate.models.LoanCategory;
 import com.orderedsoft.loangate.serviceProxies.CategoriesProxy;
-import com.orderedsoft.loangate.serviceProxies.LoanCategory;
 
 
 public class CategoryActivityViewModel implements IObserver

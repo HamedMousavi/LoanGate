@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import com.orderedsoft.loangate.models.LoanCategory;
+
 import HLib.IObserver;
 import HLib.WebServiceInvoker;
 import HLib.WebServiceTask;

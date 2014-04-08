@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:gravity="center" >
 
-    <ListView 
-        android:id="@+id/lvw_categories"
+     <fragment
+        android:id="@+id/loanCategoryListFragment"
+        android:name="com.orderedsoft.loangate.categoryFragments.LoanCategoryListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:gravity="center" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

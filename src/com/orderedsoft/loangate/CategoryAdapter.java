@@ -2,7 +2,7 @@ package com.orderedsoft.loangate;
 
 import java.util.List;
 
-import com.orderedsoft.loangate.serviceProxies.LoanCategory;
+import com.orderedsoft.loangate.models.LoanCategory;
 
 import HLib.Convert;
 import android.app.Activity;
