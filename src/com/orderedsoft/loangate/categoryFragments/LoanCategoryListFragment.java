@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -25,6 +26,16 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	private View _view;
 	public CategoryActivityViewModel Model = null;
 	private ArrayAdapter<LoanCategory> _categoriesAdapter;
+
+	
+	public LoanCategoryListFragment()
+	{
+	}
+
+	public void SetCategoryListItemClickListener(OnItemClickListener listener) 
+	{
+		_onCategoryItemClicked = listener;
+	}
 
 
 	@Override
@@ -96,27 +107,6 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	}
 
 	
-	 private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
-	 {
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-		{
-		    Toast.makeText(_view.getContext(), "You have selected " + Model.getCategory(position).getName(), 
-		        Toast.LENGTH_SHORT).show();
-		    
-		    LoanListFragment detailFragment = (LoanListFragment) 
-	                getFragmentManager().findFragmentById(R.id.loanListFragment);
-	            
-            //---if the detail fragment is not in the current activity as myself---
-            if (detailFragment != null && detailFragment.isInLayout()) {
-                //---the detail fragment is in the same activity as the master---
-                //detailFragment.setSelectedPresident(selectedPresident);
-            } else {
-                //---the detail fragment is in its own activity---
-                Intent intent = new Intent(getActivity(), LoanListActivity.class);
-                //intent.putExtra("president", selectedPresident);
-                startActivity(intent);
-            }
-		}
-	 };
+	 private AdapterView.OnItemClickListener _onCategoryItemClicked;
 
 }
