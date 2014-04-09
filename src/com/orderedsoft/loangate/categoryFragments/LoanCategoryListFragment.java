@@ -2,10 +2,12 @@ package com.orderedsoft.loangate.categoryFragments;
 import com.orderedsoft.loangate.CategoryActivityViewModel;
 import com.orderedsoft.loangate.CategoryAdapter;
 import com.orderedsoft.loangate.R;
+import com.orderedsoft.loangate.activities.LoanListActivity;
 import com.orderedsoft.loangate.models.LoanCategory;
 
 import HLib.IObserver;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -100,6 +102,20 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 		{
 		    Toast.makeText(_view.getContext(), "You have selected " + Model.getCategory(position).getName(), 
 		        Toast.LENGTH_SHORT).show();
+		    
+		    LoanListFragment detailFragment = (LoanListFragment) 
+	                getFragmentManager().findFragmentById(R.id.loanListFragment);
+	            
+            //---if the detail fragment is not in the current activity as myself---
+            if (detailFragment != null && detailFragment.isInLayout()) {
+                //---the detail fragment is in the same activity as the master---
+                //detailFragment.setSelectedPresident(selectedPresident);
+            } else {
+                //---the detail fragment is in its own activity---
+                Intent intent = new Intent(getActivity(), LoanListActivity.class);
+                //intent.putExtra("president", selectedPresident);
+                startActivity(intent);
+            }
 		}
 	 };
 
