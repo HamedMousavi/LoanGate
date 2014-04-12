@@ -3,12 +3,10 @@ package com.orderedsoft.loangate.navigation;
 
 
 import com.orderedsoft.loangate.R;
-import com.orderedsoft.loangate.activities.LoanListActivity;
 import com.orderedsoft.loangate.categoryFragments.LoanCategoryListFragment;
 import com.orderedsoft.loangate.categoryFragments.LoanListFragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 
 public class CategoryListTabFragment extends Fragment
@@ -36,34 +32,6 @@ public class CategoryListTabFragment extends Fragment
 
 		SetActiveFragment(containerId, fragmentId);
     }
-
-	
-	private void SetActiveFragment(int containerId, int fragmentId) 
-	{
-		FragmentManager fm = getFragmentManager();
-		Fragment fragment = fm.findFragmentById(fragmentId);
-		if (fragment == null)
-		{
-			fragment = CreateFragment(fragmentId);
-			fm.beginTransaction().replace(containerId, fragment).commit();
-		}
-	}
-
-
-	private Fragment CreateFragment(int fragmentId) {
-		switch(fragmentId)
-		{
-		case R.id.loanCategoryListFragment:
-			LoanCategoryListFragment fragment = new LoanCategoryListFragment();
-			fragment.SetCategoryListItemClickListener(_onCategoryItemClicked);
-			return fragment;
-			
-		case R.id.loanListFragment:
-			return new LoanListFragment();
-		}
-		
-		return null;
-	}
 
 
 	@Override
@@ -86,6 +54,35 @@ public class CategoryListTabFragment extends Fragment
     {
 		super.onStart();
     }	
+
+	
+	private void SetActiveFragment(int containerId, int fragmentId) 
+	{
+		FragmentManager fm = getFragmentManager();
+		Fragment fragment = fm.findFragmentById(fragmentId);
+		if (fragment == null)
+		{
+			fragment = CreateFragment(fragmentId);
+		}
+
+		fm.beginTransaction().replace(containerId, fragment).commit();
+	}
+
+
+	private Fragment CreateFragment(int fragmentId) {
+		switch(fragmentId)
+		{
+		case R.id.loanCategoryListFragment:
+			LoanCategoryListFragment fragment = new LoanCategoryListFragment();
+			fragment.SetCategoryListItemClickListener(_onCategoryItemClicked);
+			return fragment;
+			
+		case R.id.loanListFragment:
+			return new LoanListFragment();
+		}
+		
+		return null;
+	}
 
 	
 	 private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
