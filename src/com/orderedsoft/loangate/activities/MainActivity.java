@@ -50,28 +50,28 @@ public class MainActivity extends FragmentActivity
             		_tabHost.newTabSpec("tab1").
             			setIndicator(createTabView(_tabHost.getContext(),
             					getResources().getText(R.string.list), 
-            					getResources().getDrawable(R.drawable.icon1))),
+            					getResources().getDrawable(R.drawable.list))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab2").
             			setIndicator(createTabView(_tabHost.getContext(),
             					getResources().getText(R.string.search), 
-            					getResources().getDrawable(R.drawable.icon1))),
+            					getResources().getDrawable(R.drawable.search))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab3").
         			setIndicator(createTabView(_tabHost.getContext(),
         					getResources().getText(R.string.sync), 
-        					getResources().getDrawable(R.drawable.icon1))),
+        					getResources().getDrawable(R.drawable.bell))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab4").
         			setIndicator(createTabView(_tabHost.getContext(),
         					getResources().getText(R.string.settings), 
-        					getResources().getDrawable(R.drawable.icon1))),
+        					getResources().getDrawable(R.drawable.settings))),
                     CategoryListTabFragment.class, null);
         }
 	}

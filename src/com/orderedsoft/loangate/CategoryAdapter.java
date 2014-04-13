@@ -20,6 +20,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 	
 	private List<LoanCategory> _items;
 	private Context _context;
+	private int[] _imageId;
 
 	
 	public CategoryAdapter(Context context, int resource, List<LoanCategory> objects) 
@@ -28,6 +29,19 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		
 		_items = objects;
 		_context = context;
+		_imageId = new int[]
+				{
+					R.drawable.house_one,
+					R.drawable.house_one,
+					R.drawable.car,
+					R.drawable.repair,
+					R.drawable.ring,
+					R.drawable.user_student,
+					R.drawable.plane,
+					R.drawable.user_medical_female_black,
+					R.drawable.street_stall,
+					R.drawable.tractor
+				};
 	}
 	
 	
@@ -56,7 +70,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 	private void ExchangeData(CategoryItemViewControls info, LoanCategory item) {
 		info.getCategoryCount().setText(Integer.toString(item.getLoanerCount()));
 		info.getCategoryDescription().setText(item.getDescription());
-		//info.getCategoryIcon().setImage
+		info.getCategoryIcon().setImageResource(_imageId[(int) item.getId()]);
 		info.getCategoryModified().setText(Convert.ToString(item.getLastModified()));
 		info.getCategoryTitle().setText(item.getName());
 	}
