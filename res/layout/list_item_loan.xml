@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dip" >
+        
+    <TextView
+        android:id="@+id/tbxLoanAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="#040404"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/app_name" />
+    
+    <TextView
+        android:id="@+id/tbxLoanAmountUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tbxLoanAmount"
+        android:layout_alignBottom="@+id/tbxLoanAmount"
+        android:textColor="#A00404"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="@string/search" />
+
+    <TextView 
+        android:id="@+id/tbxLoanExpiration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="#909090"
+        android:textSize="12sp"
+        android:text="@string/sync" />
+    
+    <TextView
+        android:id="@+id/tbxLoanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tbxLoanAmount"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="2dp"
+        android:textColor="#909090"
+        android:textSize="12sp"
+        android:text="@string/category_icon_description" />
+</RelativeLayout>

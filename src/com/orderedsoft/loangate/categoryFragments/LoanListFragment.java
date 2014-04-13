@@ -4,6 +4,7 @@ import com.orderedsoft.loangate.LoanListAdapter;
 import com.orderedsoft.loangate.LoanListViewModel;
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.models.Loan;
+import com.orderedsoft.loangate.models.LoanCategory;
 
 import HLib.IObserver;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class LoanListFragment extends Fragment implements IObserver
 	private LoanListViewModel Model = null;
 	private ArrayAdapter<Loan> _loanListAdapter;
 	private AdapterView.OnItemClickListener _onLoanListItemClicked;
+	private LoanCategory _category;
 
 	
 	public void SetLoanListItemClickListener(OnItemClickListener listener) 
@@ -55,7 +57,7 @@ public class LoanListFragment extends Fragment implements IObserver
     	{
     		Model = new LoanListViewModel(this);
             ReBindLoans();
-    		Model.ReloadLoans();
+    		Model.ReloadLoans(_category.getId());
     	}
 	}
 
@@ -64,7 +66,7 @@ public class LoanListFragment extends Fragment implements IObserver
     	// Bind ListView to Categories
 		if (Model.getLoans() != null) {
 	    	_loanListAdapter = new LoanListAdapter(
-	    			_view.getContext(), R.layout.category_list_item, Model.getLoans());
+	    			_view.getContext(), R.layout.list_item_loan, Model.getLoans());
 	    	ListView lvwCategories = (ListView)_view.findViewById(R.id.lvw_loans);
 			lvwCategories.setAdapter(_loanListAdapter);
 			lvwCategories.setOnItemClickListener(_onLoanListItemClicked);
@@ -82,5 +84,9 @@ public class LoanListFragment extends Fragment implements IObserver
 	public void OnSubjectChanged(Object observable, Object params)
 	{
 		ReBindLoans();
+	}
+
+	public void setLoanCategory(LoanCategory category) {
+		_category = category;
 	}
 }

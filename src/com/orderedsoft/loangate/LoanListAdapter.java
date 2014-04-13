@@ -1,7 +1,9 @@
 package com.orderedsoft.loangate;
 
+
 import java.util.List;
 
+import HLib.Convert;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -31,16 +33,16 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 	@Override
 	public View getView(int position, View view, ViewGroup parent)
 	{
-		CategoryItemViewControls info;
+		LoanItemViewControls info;
 		
 		if (view == null)
 		{
-			info = new CategoryItemViewControls();
+			info = new LoanItemViewControls();
 			view = CreateView(info);
 		}
 		else // A second visit, use last visit data
 		{
-			info = (CategoryItemViewControls)view.getTag();
+			info = (LoanItemViewControls)view.getTag();
 		}
 		
 		Loan item = _items.get(position);
@@ -50,24 +52,26 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 	}
 
 	
-	private void ExchangeData(CategoryItemViewControls info, Loan item) {
-		//info.getCategoryCount().setText(Integer.toString(item.getLoanerCount()));
-		//info.getCategoryDescription().setText(item.getDescription());
-		//info.getCategoryIcon().setImage
-		//info.getCategoryModified().setText(Convert.ToString(item.getLastModified()));
-		info.getCategoryTitle().setText(item.getTitle());
+	private void ExchangeData(LoanItemViewControls info, Loan item) 
+	{
+		String expLabel = (String) _context.getResources().getText(R.string.expires_at);
+		expLabel += ": ";
+		
+		info.get_tbxLoanAmount().setText(String.format("%.0f ", item.getValue()));
+		info.get_tbxLoanAmountUnit().setText(item.getLoanAmountUnit());
+		info.get_tbxLoanExpiration().setText(expLabel + Convert.ToString(item.getEpiration()));
+		info.get_tbxLoanTitle().setText(item.getTitle());
 	}
 
 
-	private View CreateView(CategoryItemViewControls info) {
+	private View CreateView(LoanItemViewControls info) {
 		LayoutInflater inflater = ((Activity)_context).getLayoutInflater();
-		View view = inflater.inflate(R.layout.category_list_item, null);
+		View view = inflater.inflate(R.layout.list_item_loan, null);
 		
-		//info.setCategoryCount((TextView)view.findViewById(R.id.tbxCategoryCount));
-		//info.setCategoryDescription((TextView)view.findViewById(R.id.tbxCategoryDescription));
-		//info.setCategoryIcon((ImageView)view.findViewById(R.id.ivwCategoryIcon));
-		//info.setCategoryModified((TextView)view.findViewById(R.id.tbxCategoryModified));
-		info.setCategoryTitle((TextView)view.findViewById(R.id.tbxCategoryTitle));
+		info.set_tbxLoanAmount((TextView)view.findViewById(R.id.tbxLoanAmount));
+		info.set_tbxLoanAmountUnit((TextView)view.findViewById(R.id.tbxLoanAmountUnit));
+		info.set_tbxLoanExpiration((TextView)view.findViewById(R.id.tbxLoanExpiration));
+		info.set_tbxLoanTitle((TextView)view.findViewById(R.id.tbxLoanTitle));
 
 		return view;
 	}

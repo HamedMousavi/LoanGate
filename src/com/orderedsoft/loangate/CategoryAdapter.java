@@ -64,7 +64,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 
 	private View CreateView(CategoryItemViewControls info) {
 		LayoutInflater inflater = ((Activity)_context).getLayoutInflater();
-		View view = inflater.inflate(R.layout.category_list_item, null);
+		View view = inflater.inflate(R.layout.list_item_category, null);
 		
 		info.setCategoryCount((TextView)view.findViewById(R.id.tbxCategoryCount));
 		info.setCategoryDescription((TextView)view.findViewById(R.id.tbxCategoryDescription));
