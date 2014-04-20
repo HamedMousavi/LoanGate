@@ -4,7 +4,9 @@ package com.orderedsoft.loangate.navigation;
 
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.categoryFragments.LoanCategoryListFragment;
+import com.orderedsoft.loangate.categoryFragments.LoanDetailFragment;
 import com.orderedsoft.loangate.categoryFragments.LoanListFragment;
+import com.orderedsoft.loangate.models.Loan;
 import com.orderedsoft.loangate.models.LoanCategory;
 
 import android.app.Activity;
@@ -15,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 
 public class CategoryListTabFragment extends Fragment
@@ -23,8 +24,10 @@ public class CategoryListTabFragment extends Fragment
 	
 	private View _view;
 	private LoanCategory _selectedCategory;
+	private Loan _selectedLoan;
 	private LoanCategoryListFragment _loanCategoryListFragment;
 	private LoanListFragment _loanListFragment;
+	private LoanDetailFragment _loanDetailFragment;
 
 
 	@Override
@@ -74,7 +77,10 @@ public class CategoryListTabFragment extends Fragment
 	}
 
 
-	private Fragment CreateFragment(int fragmentId) {
+	private Fragment CreateFragment(int fragmentId) 
+	{
+		Fragment result = null;
+		
 		switch(fragmentId)
 		{
 		case R.id.loanCategoryListFragment:
@@ -83,7 +89,8 @@ public class CategoryListTabFragment extends Fragment
 				_loanCategoryListFragment = new LoanCategoryListFragment();
 				_loanCategoryListFragment.SetCategoryListItemClickListener(_onCategoryItemClicked);
 			}			
-			return _loanCategoryListFragment;
+			result = _loanCategoryListFragment;
+			break;
 			
 		case R.id.loanListFragment:
 			if (_loanListFragment == null)
@@ -92,10 +99,32 @@ public class CategoryListTabFragment extends Fragment
 				_loanListFragment.SetLoanListItemClickListener(_onLoanItemClicked);
 			}
 			_loanListFragment.setLoanCategory(getSelectedCategory());
-			return _loanListFragment;
+			result = _loanListFragment;
+			break;
+			
+		case R.id.loanDetailFragment:
+			if (_loanDetailFragment == null)
+			{
+				_loanDetailFragment = new LoanDetailFragment();
+			}
+			_loanDetailFragment.SetLoan(getSelectedLoan());
+			result = _loanDetailFragment;
+			break;
 		}
 		
-		return null;
+		return result;
+	}
+
+
+	private Loan getSelectedLoan() {
+		// TODO Auto-generated method stub
+		return _selectedLoan;
+	}
+	
+	
+	private void setSelectedLoan(Loan loan)
+	{
+		_selectedLoan = loan;
 	}
 
 
@@ -143,8 +172,19 @@ public class CategoryListTabFragment extends Fragment
 	 {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-		    Toast.makeText(_view.getContext(), "You have selected item # " + Integer.toString(position), 
-		        Toast.LENGTH_SHORT).show();
+			setSelectedLoan(_loanListFragment.getModel().getLoan(position));
+			
+			LoanDetailFragment detailFragment = (LoanDetailFragment) 
+	                getFragmentManager().findFragmentById(R.id.loanDetailFragment);
+	            
+           //---if the detail fragment is not in the current activity as myself---
+           if (detailFragment != null && detailFragment.isInLayout()) {
+               //---the detail fragment is in the same activity as the master---
+               //detailFragment.setSelectedPresident(selectedPresident);
+           } else {
+               //---the detail fragment is in its own activity---
+        	   SetActiveFragment(R.id.mainContainer, R.id.loanDetailFragment);
+           }
 		}
 	 };
 }

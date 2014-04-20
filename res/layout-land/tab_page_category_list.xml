@@ -19,4 +19,11 @@
         android:layout_width="100dip"
         android:layout_height="match_parent" />
 
+
+     <fragment
+        android:id="@+id/loanDetailFragment"
+        android:name="com.orderedsoft.loangate.categoryFragments.LoanDetailFragment"
+        android:layout_width="300dip"
+        android:layout_height="match_parent" />
+     
 </LinearLayout>

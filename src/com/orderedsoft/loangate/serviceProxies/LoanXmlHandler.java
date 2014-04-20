@@ -22,7 +22,7 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 	private static final String EXPIRATION = "Expiration";
 	private static final String AMOUNT = "Amount";
 	private static final String AMOUNTUNIT = "UnitName";
-	private static final String BANKLIST = "AvailableBanks";
+	//private static final String BANKLIST = "AvailableBanks";
 	private static final String ITEM = "Loan";
 	private static final String AMOUNTPARENT = "Amount";
 	private StringBuilder _chars;

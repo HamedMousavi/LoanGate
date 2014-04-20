@@ -46,6 +46,11 @@ public class LoanListViewModel implements IObserver
 
 		setLoans(list);
 	}
+
+	public Loan getLoan(int position) {
+		// TODO Auto-generated method stub
+		return getLoans().get(position);
+	}
 }
 /**
 		

@@ -22,7 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class LoanListFragment extends Fragment implements IObserver
 {
 	private View _view;
-	private LoanListViewModel Model = null;
+	private LoanListViewModel _model = null;
 	private ArrayAdapter<Loan> _loanListAdapter;
 	private AdapterView.OnItemClickListener _onLoanListItemClicked;
 	private LoanCategory _category;
@@ -53,20 +53,20 @@ public class LoanListFragment extends Fragment implements IObserver
 	private void SetupBindings()
 	{
         // Create & display view 
-        if (Model == null) 
+        if (getModel() == null) 
     	{
-    		Model = new LoanListViewModel(this);
+    		setModel(new LoanListViewModel(this));
             ReBindLoans();
-    		Model.ReloadLoans(_category.getId());
+    		getModel().ReloadLoans(_category.getId());
     	}
 	}
 
 	protected void ReBindLoans()
 	{
     	// Bind ListView to Categories
-		if (Model.getLoans() != null) {
+		if (getModel().getLoans() != null) {
 	    	_loanListAdapter = new LoanListAdapter(
-	    			_view.getContext(), R.layout.list_item_loan, Model.getLoans());
+	    			_view.getContext(), R.layout.list_item_loan, getModel().getLoans());
 	    	ListView lvwCategories = (ListView)_view.findViewById(R.id.lvw_loans);
 			lvwCategories.setAdapter(_loanListAdapter);
 			lvwCategories.setOnItemClickListener(_onLoanListItemClicked);
@@ -88,5 +88,19 @@ public class LoanListFragment extends Fragment implements IObserver
 
 	public void setLoanCategory(LoanCategory category) {
 		_category = category;
+	}
+
+	/**
+	 * @return the model
+	 */
+	public LoanListViewModel getModel() {
+		return _model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	private void setModel(LoanListViewModel model) {
+		_model = model;
 	}
 }
