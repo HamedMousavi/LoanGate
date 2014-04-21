@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:divider="@drawable/tab_header_divider"
             android:layout_weight="0" />
         <FrameLayout
             android:id="@android:id/tabcontent"
@@ -19,8 +20,7 @@
             android:layout_height="0dp"
             android:layout_weight="0" />
 
-		<LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#202020" />
-   		<LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#A0A0A0" />
+		<LinearLayout android:layout_width="match_parent" android:layout_height="3dp" android:background="@color/dark_lit_led_background" />
 		
 		<!-- In 10 years of programming, I've never seen such a weired framework! Real content go here. -->
         <FrameLayout

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_normal_tab_background">#565656</color>
+    <color name="dark_text_dim">#cbcbcb</color>
+    <color name="dark_text_light">#ffffff</color>
+    <color name="dark_lit_led_background">#80b0ff</color>
+    <color name="dark_normal_led_background">#666666</color>
+</resources>
