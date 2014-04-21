@@ -22,7 +22,7 @@
 		<LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#202020" />
    		<LinearLayout android:layout_width="match_parent" android:layout_height="1dp" android:background="#A0A0A0" />
 		
-		<!-- In 10 years of programming, I've never seen such a weired framework! Real content goes here. -->
+		<!-- In 10 years of programming, I've never seen such a weired framework! Real content go here. -->
         <FrameLayout
             android:id="@+id/tab_main_content"
             android:layout_width="match_parent"
