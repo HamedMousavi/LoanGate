@@ -31,16 +31,16 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		_context = context;
 		_imageId = new int[]
 				{
-					R.drawable.house_one,
-					R.drawable.house_one,
+					R.drawable.home,
+					R.drawable.home,
 					R.drawable.car,
 					R.drawable.repair,
-					R.drawable.ring,
-					R.drawable.user_student,
+					R.drawable.wedding,
+					R.drawable.graduation,
 					R.drawable.plane,
-					R.drawable.user_medical_female_black,
-					R.drawable.street_stall,
-					R.drawable.tractor
+					R.drawable.ambulance_dark,
+					R.drawable.store,
+					R.drawable.manufactory
 				};
 	}
 	
