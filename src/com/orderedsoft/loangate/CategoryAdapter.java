@@ -68,7 +68,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 
 	
 	private void ExchangeData(CategoryItemViewControls info, LoanCategory item) {
-		info.getCategoryCount().setText(Integer.toString(item.getLoanerCount()));
+		info.getCategoryCount().setText("View all " + Integer.toString(item.getLoanerCount()));
 		info.getCategoryDescription().setText(item.getDescription());
 		info.getCategoryIcon().setImageResource(_imageId[(int) item.getId()]);
 		info.getCategoryModified().setText(Convert.ToString(item.getLastModified()));

@@ -12,5 +12,6 @@
     <string name="category_icon_description">Category Icon</string>
     <string name="separator">Seperator line</string>
     <string name="expires_at">Expires at</string>
-
+    <string name="separator">|</string>
+    
 </resources>

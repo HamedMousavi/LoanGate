@@ -11,11 +11,17 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int dark_lit_led_background=0x7f040003;
-        public static final int dark_normal_led_background=0x7f040004;
+        public static final int dark_background_light=0x7f040001;
+        public static final int dark_black=0x7f040008;
+        public static final int dark_gray_light=0x7f040009;
+        public static final int dark_gray_mid=0x7f04000a;
+        public static final int dark_lit_led_background=0x7f040004;
+        public static final int dark_normal_led_background=0x7f040005;
         public static final int dark_normal_tab_background=0x7f040000;
-        public static final int dark_text_dim=0x7f040001;
-        public static final int dark_text_light=0x7f040002;
+        public static final int dark_orange_light=0x7f040006;
+        public static final int dark_text_dim=0x7f040002;
+        public static final int dark_text_light=0x7f040003;
+        public static final int dark_white=0x7f040007;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -53,28 +59,29 @@ public final class R {
         public static final int wedding=0x7f020016;
     }
     public static final class id {
-        public static final int action_settings=0x7f090016;
+        public static final int action_settings=0x7f090017;
         public static final int ivwCategoryIcon=0x7f090007;
-        public static final int ivwTabIcon=0x7f090014;
-        public static final int loanCategoryListFragment=0x7f090011;
-        public static final int loanDetailFragment=0x7f090013;
+        public static final int ivwTabIcon=0x7f090015;
+        public static final int loanCategoryListFragment=0x7f090012;
+        public static final int loanDetailFragment=0x7f090014;
         public static final int loanDetailWebView=0x7f090001;
-        public static final int loanListFragment=0x7f090012;
+        public static final int loanListFragment=0x7f090013;
         public static final int lvw_categories=0x7f090000;
         public static final int lvw_loans=0x7f090002;
-        public static final int mainContainer=0x7f090010;
+        public static final int mainContainer=0x7f090011;
         public static final int ratingBar1=0x7f090005;
         public static final int tab_main_content=0x7f090004;
         public static final int tabhost=0x7f090003;
         public static final int tbxCategoryCount=0x7f090009;
-        public static final int tbxCategoryDescription=0x7f09000b;
-        public static final int tbxCategoryModified=0x7f09000a;
+        public static final int tbxCategoryDescription=0x7f09000c;
+        public static final int tbxCategoryModified=0x7f09000b;
         public static final int tbxCategoryTitle=0x7f090008;
-        public static final int tbxLoanAmount=0x7f09000c;
-        public static final int tbxLoanAmountUnit=0x7f09000d;
-        public static final int tbxLoanExpiration=0x7f09000e;
-        public static final int tbxLoanTitle=0x7f09000f;
-        public static final int tbxTabTitle=0x7f090015;
+        public static final int tbxLoanAmount=0x7f09000d;
+        public static final int tbxLoanAmountUnit=0x7f09000e;
+        public static final int tbxLoanExpiration=0x7f09000f;
+        public static final int tbxLoanTitle=0x7f090010;
+        public static final int tbxSeparator1=0x7f09000a;
+        public static final int tbxTabTitle=0x7f090016;
         public static final int thumbnail=0x7f090006;
     }
     public static final class layout {
