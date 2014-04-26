@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,41 +23,68 @@ import android.widget.AdapterView;
 public class CategoryListTabFragment extends Fragment
 {
 	
-	private View _view;
 	private LoanCategory _selectedCategory;
+	private int _selectedCategoryIndex;
 	private Loan _selectedLoan;
+	private int _selectedLoanIndex;
 	private LoanCategoryListFragment _loanCategoryListFragment;
 	private LoanListFragment _loanListFragment;
 	private LoanDetailFragment _loanDetailFragment;
+	private int _activeFragment = -1;
+	private View _view;
 
 
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
-    	// Create menu
-		super.onCreate(savedInstanceState);
-		
-		int fragmentId = R.id.loanCategoryListFragment;
-		int containerId = R.id.mainContainer;
-
-		SetActiveFragment(containerId, fragmentId);
-    }
-
-
-	@Override
-    public void onAttach(Activity activity) 
+	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
 	{
-        super.onAttach(activity);
-	}
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			SelectCategory(position);
+		}
+	};
+	 
+	
+	private AdapterView.OnItemClickListener _onLoanItemClicked = new AdapterView.OnItemClickListener() 
+	{
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			SelectLoan(position);
+		}
+	};
 
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-    	 _view = inflater.inflate(R.layout.tab_page_category_list, container, false);
-    	 return  _view;
-    }
-    
+	    _view = inflater.inflate(R.layout.tab_page_category_list, container, false);
+    	
+		if (savedInstanceState != null)
+		{
+			RestoreState(savedInstanceState);
+		}
+		else
+		{
+			SetActiveFragment(R.id.mainContainer, R.id.loanCategoryListFragment);
+		}
 
+		return  _view;
+    }
+
+
+	@Override
+    public void onCreate(Bundle savedInstanceState) 
+	{
+    	// Create menu
+		super.onCreate(savedInstanceState);
+    }
+	
+
+	@Override
+    public void onAttach(Activity activity) 
+	{
+        super.onAttach(activity);
+	}   
+
+	
 	@Override
     public void onStart()
     {
@@ -64,20 +92,87 @@ public class CategoryListTabFragment extends Fragment
     }	
 
 	
+    @Override
+    public void onPause() 
+    {
+        super.onPause();
+    }
+
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+	}
+	
+	
+	@Override
+	public void onDestroyView() 
+	{
+	    super.onDestroyView();
+	    /**
+	    if (_view != null) {
+	        ViewGroup parentViewGroup = (ViewGroup) _view.getParent();
+	        if (parentViewGroup != null) {
+	            parentViewGroup.removeAllViewsInLayout();;
+	        }
+	    }*/
+	}	 
+
+
+	@Override
+    public void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        SaveState(outState);
+    }
+
+	
+	private void SaveState(Bundle outState) 
+	{
+        outState.putInt("activeFragment", _activeFragment);
+        outState.putInt("selectedLoanIndex", _selectedLoanIndex);
+        outState.putInt("selectedCategoryIndex", _selectedCategoryIndex);
+	}
+
+	
+	private void RestoreState(Bundle savedInstanceState) 
+	{
+		int fragmentId = savedInstanceState.getInt("activeFragment");
+		int selectedLoan = savedInstanceState.getInt("selectedLoanIndex");
+		int selectedCategory = savedInstanceState.getInt("selectedCategoryIndex");
+
+		if (fragmentId != -1) 
+		{
+			SetActiveFragment(R.id.mainContainer, fragmentId);
+		}
+		
+		if (selectedCategory != -1)
+		{
+			SelectCategory(selectedCategory);
+		}
+		
+		if (selectedLoan != -1)
+		{
+			SelectLoan(selectedLoan);
+		}
+	}
+	
+	
 	private void SetActiveFragment(int containerId, int fragmentId) 
 	{
-		FragmentManager fm = getFragmentManager();
-		Fragment fragment = fm.findFragmentById(fragmentId);
-		if (fragment == null)
-		{
-			fragment = CreateFragment(fragmentId);
-		}
-
-		fm.beginTransaction().replace(containerId, fragment).commit();
+		_activeFragment = fragmentId;
+		FragmentManager fm = getChildFragmentManager();
+		Fragment fragment = CreateFragment(fragmentId);
+		
+		FragmentTransaction transaction = fm.beginTransaction();
+		transaction.replace(containerId, fragment);
+		transaction.show(fragment);
+		//transaction.addToBackStack(null);
+		transaction.commit();
 	}
 
 
-	private Fragment CreateFragment(int fragmentId) 
+	private Fragment CreateFragment(int fragmentId)
 	{
 		Fragment result = null;
 		
@@ -115,6 +210,44 @@ public class CategoryListTabFragment extends Fragment
 		return result;
 	}
 
+	 
+	private void SelectCategory(int position) 
+	{
+		_selectedCategoryIndex = position;
+		setSelectedCategory(_loanCategoryListFragment.Model.getCategory(position));
+	    
+	    LoanListFragment detailFragment = (LoanListFragment) 
+	    		getChildFragmentManager().findFragmentById(R.id.loanListFragment);
+	            
+	    //---if the detail fragment is not in the current activity as myself---
+	    if (detailFragment != null && detailFragment.isInLayout()) {
+	        //---the detail fragment is in the same activity as the master---
+	        //detailFragment.setSelectedPresident(selectedPresident);
+	    } else {
+	        //---the detail fragment is in its own activity---
+	 	   SetActiveFragment(R.id.mainContainer, R.id.loanListFragment);
+	    }
+	}
+	
+	private void SelectLoan(int position) 
+	{
+		_selectedLoanIndex = position;
+		setSelectedLoan(_loanListFragment.getModel().getLoan(position));
+		
+		LoanDetailFragment detailFragment = (LoanDetailFragment) 
+				getChildFragmentManager().findFragmentById(R.id.loanDetailFragment);
+	        
+	   //---if the detail fragment is not in the current activity as myself---
+	   if (detailFragment != null && detailFragment.isInLayout()) {
+	       //---the detail fragment is in the same activity as the master---
+	       //detailFragment.setSelectedPresident(selectedPresident);
+	   } else 
+	   {
+	       //---the detail fragment is in its own activity---
+		   SetActiveFragment(R.id.mainContainer, R.id.loanDetailFragment);
+	   }
+	}
+
 
 	private Loan getSelectedLoan() {
 		// TODO Auto-generated method stub
@@ -142,49 +275,4 @@ public class CategoryListTabFragment extends Fragment
 	public void setSelectedCategory(LoanCategory selectedCategory) {
 		this._selectedCategory = selectedCategory;
 	}
-
-
-	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
-	 {
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-		{
-		    //Toast.makeText(_view.getContext(), "You have selected " + Model.getCategory(position).getName(), 
-		    //    Toast.LENGTH_SHORT).show();
-						
-			setSelectedCategory(_loanCategoryListFragment.Model.getCategory(position));
-		    
-		    LoanListFragment detailFragment = (LoanListFragment) 
-	                getFragmentManager().findFragmentById(R.id.loanListFragment);
-	            
-           //---if the detail fragment is not in the current activity as myself---
-           if (detailFragment != null && detailFragment.isInLayout()) {
-               //---the detail fragment is in the same activity as the master---
-               //detailFragment.setSelectedPresident(selectedPresident);
-           } else {
-               //---the detail fragment is in its own activity---
-        	   SetActiveFragment(R.id.mainContainer, R.id.loanListFragment);
-           }
-		}
-	 };
-
-	
-	 private AdapterView.OnItemClickListener _onLoanItemClicked = new AdapterView.OnItemClickListener() 
-	 {
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-		{
-			setSelectedLoan(_loanListFragment.getModel().getLoan(position));
-			
-			LoanDetailFragment detailFragment = (LoanDetailFragment) 
-	                getFragmentManager().findFragmentById(R.id.loanDetailFragment);
-	            
-           //---if the detail fragment is not in the current activity as myself---
-           if (detailFragment != null && detailFragment.isInLayout()) {
-               //---the detail fragment is in the same activity as the master---
-               //detailFragment.setSelectedPresident(selectedPresident);
-           } else {
-               //---the detail fragment is in its own activity---
-        	   SetActiveFragment(R.id.mainContainer, R.id.loanDetailFragment);
-           }
-		}
-	 };
 }

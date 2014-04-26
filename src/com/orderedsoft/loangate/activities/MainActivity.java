@@ -3,6 +3,9 @@ package com.orderedsoft.loangate.activities;
 
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.navigation.CategoryListTabFragment;
+import com.orderedsoft.loangate.navigation.NotifyTabFragment;
+import com.orderedsoft.loangate.navigation.SearchTabFragment;
+import com.orderedsoft.loangate.navigation.SettingsTabFragment;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -46,40 +49,41 @@ public class MainActivity extends FragmentActivity
 
             _tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
             _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
+            Context context = _tabHost.getContext();
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab1").
-            			setIndicator(createTabView(_tabHost.getContext(),
+            			setIndicator(createTabView(context,
             					getResources().getText(R.string.list), 
             					getResources().getDrawable(R.drawable.list))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab2").
-            			setIndicator(createTabView(_tabHost.getContext(),
+            			setIndicator(createTabView(context,
             					getResources().getText(R.string.search), 
             					getResources().getDrawable(R.drawable.search))),
-                    CategoryListTabFragment.class, null);
+                    SearchTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab3").
-        			setIndicator(createTabView(_tabHost.getContext(),
-        					getResources().getText(R.string.sync), 
+        			setIndicator(createTabView(context,
+        					getResources().getText(R.string.notify), 
         					getResources().getDrawable(R.drawable.bell))),
-                    CategoryListTabFragment.class, null);
+                    NotifyTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("tab4").
-        			setIndicator(createTabView(_tabHost.getContext(),
+        			setIndicator(createTabView(context,
         					getResources().getText(R.string.settings), 
         					getResources().getDrawable(R.drawable.settings))),
-                    CategoryListTabFragment.class, null);
+                    SettingsTabFragment.class, null);
         }
 	}
 	
 
 	private View createTabView(Context context, CharSequence text, Drawable drawable) 
 	{
-		View view = LayoutInflater.from(context).inflate(R.layout.tab_page_header, null);
+		View view = LayoutInflater.from(context).inflate(R.layout.tab_host_header, null);
 		TextView tv = (TextView) view.findViewById(R.id.tbxTabTitle);
 		tv.setText(text);
 		

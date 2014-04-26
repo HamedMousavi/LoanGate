@@ -32,10 +32,16 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) 
+	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-    }
+
+        if (Model == null) 
+    	{
+    		Model = new CategoryActivityViewModel(this);
+    	}
+	}
 
 	
 	@Override
@@ -48,7 +54,7 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-    	if (_view == null) _view = inflater.inflate(R.layout.activity_loan_category_list, container, false);
+    	_view = inflater.inflate(R.layout.activity_loan_category_list, container, false);
         return _view;
     }
     
@@ -65,12 +71,8 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	private void SetupBindings()
 	{
         // Create & display view 
-        if (Model == null) 
-    	{
-    		Model = new CategoryActivityViewModel(this);
-            ReBindCategories();
-    		Model.ReloadCategories();
-    	}
+        ReBindCategories();
+		Model.ReloadCategories();
 	}
 
 	

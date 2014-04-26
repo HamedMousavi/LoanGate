@@ -33,10 +33,23 @@ public class LoanListFragment extends Fragment implements IObserver
 		_onLoanListItemClicked = listener;
 	}
 	
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) 
+	{
+    	// Create menu
+		super.onCreate(savedInstanceState);
+		if (getModel() == null) 
+		{
+			setModel(new LoanListViewModel(this));
+		}
+	}
+	
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-    	if (_view == null) _view = inflater.inflate(R.layout.activity_loan_list, container, false);
+    	_view = inflater.inflate(R.layout.activity_loan_list, container, false);
         return _view;
     }
     
@@ -53,12 +66,8 @@ public class LoanListFragment extends Fragment implements IObserver
 	private void SetupBindings()
 	{
         // Create & display view 
-        if (getModel() == null) 
-    	{
-    		setModel(new LoanListViewModel(this));
-            ReBindLoans();
-    		getModel().ReloadLoans(_category.getId());
-    	}
+        ReBindLoans();
+		getModel().ReloadLoans(_category.getId());
 	}
 
 	protected void ReBindLoans()

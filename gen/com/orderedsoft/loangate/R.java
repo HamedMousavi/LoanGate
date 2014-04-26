@@ -15,12 +15,12 @@ public final class R {
         public static final int dark_black=0x7f040008;
         public static final int dark_gray_light=0x7f040009;
         public static final int dark_gray_mid=0x7f04000a;
-        public static final int dark_lit_led_background=0x7f040004;
-        public static final int dark_normal_led_background=0x7f040005;
+        public static final int dark_lit_led_background=0x7f040002;
+        public static final int dark_normal_led_background=0x7f040003;
         public static final int dark_normal_tab_background=0x7f040000;
         public static final int dark_orange_light=0x7f040006;
-        public static final int dark_text_dim=0x7f040002;
-        public static final int dark_text_light=0x7f040003;
+        public static final int dark_text_dim=0x7f040004;
+        public static final int dark_text_light=0x7f040005;
         public static final int dark_white=0x7f040007;
     }
     public static final class dimen {
@@ -60,41 +60,42 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f090017;
-        public static final int ivwCategoryIcon=0x7f090007;
-        public static final int ivwTabIcon=0x7f090015;
-        public static final int loanCategoryListFragment=0x7f090012;
-        public static final int loanDetailFragment=0x7f090014;
+        public static final int ivwCategoryIcon=0x7f090006;
+        public static final int ivwTabIcon=0x7f090010;
+        public static final int loanCategoryListFragment=0x7f090013;
+        public static final int loanDetailFragment=0x7f090015;
         public static final int loanDetailWebView=0x7f090001;
-        public static final int loanListFragment=0x7f090013;
+        public static final int loanListFragment=0x7f090014;
         public static final int lvw_categories=0x7f090000;
         public static final int lvw_loans=0x7f090002;
-        public static final int mainContainer=0x7f090011;
-        public static final int ratingBar1=0x7f090005;
+        public static final int mainContainer=0x7f090012;
+        public static final int ratingBar1=0x7f090016;
         public static final int tab_main_content=0x7f090004;
         public static final int tabhost=0x7f090003;
-        public static final int tbxCategoryCount=0x7f090009;
-        public static final int tbxCategoryDescription=0x7f09000c;
-        public static final int tbxCategoryModified=0x7f09000b;
-        public static final int tbxCategoryTitle=0x7f090008;
-        public static final int tbxLoanAmount=0x7f09000d;
-        public static final int tbxLoanAmountUnit=0x7f09000e;
-        public static final int tbxLoanExpiration=0x7f09000f;
-        public static final int tbxLoanTitle=0x7f090010;
-        public static final int tbxSeparator1=0x7f09000a;
-        public static final int tbxTabTitle=0x7f090016;
-        public static final int thumbnail=0x7f090006;
+        public static final int tbxCategoryCount=0x7f090008;
+        public static final int tbxCategoryDescription=0x7f09000b;
+        public static final int tbxCategoryModified=0x7f09000a;
+        public static final int tbxCategoryTitle=0x7f090007;
+        public static final int tbxLoanAmount=0x7f09000c;
+        public static final int tbxLoanAmountUnit=0x7f09000d;
+        public static final int tbxLoanExpiration=0x7f09000e;
+        public static final int tbxLoanTitle=0x7f09000f;
+        public static final int tbxSeparator1=0x7f090009;
+        public static final int tbxTabTitle=0x7f090011;
+        public static final int thumbnail=0x7f090005;
     }
     public static final class layout {
         public static final int activity_loan_category_list=0x7f030000;
         public static final int activity_loan_detail=0x7f030001;
         public static final int activity_loan_list=0x7f030002;
         public static final int activity_main=0x7f030003;
-        public static final int activity_search=0x7f030004;
-        public static final int activity_settings=0x7f030005;
-        public static final int list_item_category=0x7f030006;
-        public static final int list_item_loan=0x7f030007;
-        public static final int tab_page_category_list=0x7f030008;
-        public static final int tab_page_header=0x7f030009;
+        public static final int list_item_category=0x7f030004;
+        public static final int list_item_loan=0x7f030005;
+        public static final int tab_host_header=0x7f030006;
+        public static final int tab_page_category_list=0x7f030007;
+        public static final int tab_page_notify=0x7f030008;
+        public static final int tab_page_search=0x7f030009;
+        public static final int tab_page_settings=0x7f03000a;
     }
     public static final class menu {
         public static final int category=0x7f080000;
@@ -102,15 +103,14 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int category_icon_description=0x7f060008;
-        public static final int expires_at=0x7f06000a;
+        public static final int category_icon_description=0x7f060007;
+        public static final int expires_at=0x7f060008;
         public static final int hello_world=0x7f060002;
         public static final int list=0x7f060003;
-        public static final int notify=0x7f060006;
+        public static final int notify=0x7f060005;
         public static final int search=0x7f060004;
         public static final int separator=0x7f060009;
-        public static final int settings=0x7f060007;
-        public static final int sync=0x7f060005;
+        public static final int settings=0x7f060006;
     }
     public static final class style {
         /** 

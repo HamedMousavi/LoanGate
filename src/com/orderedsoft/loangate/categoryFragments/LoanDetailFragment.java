@@ -50,7 +50,7 @@ public class LoanDetailFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-    	if (_view == null) _view = inflater.inflate(R.layout.activity_loan_detail, container, false);
+    	_view = inflater.inflate(R.layout.activity_loan_detail, container, false);
         return _view;
     }
     

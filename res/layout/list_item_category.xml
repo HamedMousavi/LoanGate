@@ -63,7 +63,7 @@
         android:layout_alignParentTop="true"
         android:textColor="@color/dark_gray_light"
         android:textSize="14sp"
-        android:text="@string/sync" />
+        android:text="@string/notify" />
     
     <TextView
         android:id="@+id/tbxCategoryDescription"
