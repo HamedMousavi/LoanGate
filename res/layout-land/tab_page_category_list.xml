@@ -4,26 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:gravity="center" >
-
+    android:baselineAligned="false"
+    android:gravity="center">
+    
      <FrameLayout
         android:id="@+id/loanCategoryListFragment"
-        android:name="com.orderedsoft.loangate.categoryFragments.LoanCategoryListFragment"
-        android:layout_width="100dip"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 
      <FrameLayout
         android:id="@+id/loanListFragment"
-        android:name="com.orderedsoft.loangate.categoryFragments.LoanListFragment"
-        android:layout_width="100dip"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 
      <FrameLayout
         android:id="@+id/loanDetailFragment"
-        android:name="com.orderedsoft.loangate.categoryFragments.LoanDetailFragment"
-        android:layout_width="300dip"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
- 
+
+
 </LinearLayout>

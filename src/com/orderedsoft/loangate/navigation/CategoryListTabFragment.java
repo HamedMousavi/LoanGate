@@ -31,7 +31,8 @@ public class CategoryListTabFragment extends Fragment
 	private LoanListFragment _loanListFragment;
 	private LoanDetailFragment _loanDetailFragment;
 	private int _activeFragment = -1;
-
+	private View _view;
+	
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
 	{
@@ -51,11 +52,61 @@ public class CategoryListTabFragment extends Fragment
 	};
 
 	
+	// This defines dynamic fragments that might present in
+	// different layouts
+	public enum FragmentId
+	{
+		LOAN_CAT_LIST(R.id.loanCategoryListFragment),
+		LOAN_LIST(R.id.loanListFragment),
+		LOAN_DETAIL(R.id.loanDetailFragment);
+		
+		private int _id;
+		
+		FragmentId(int id)
+		{
+			set_id(id);
+		}
+
+		/**
+		 * @return the _id
+		 */
+		public int get_id() {
+			return _id;
+		}
+
+		/**
+		 * @param _id the _id to set
+		 */
+		public void set_id(int _id) {
+			this._id = _id;
+		}
+
+		
+		public static FragmentId Find(int fragmentId) {
+			for (FragmentId item : values()) {
+				if (item.get_id() == fragmentId) return item;
+			}
+			
+			return null;
+		}
+	}
+	
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-	    View view = inflater.inflate(R.layout.tab_page_category_list, container, false);
-		return  view;
+	    _view = inflater.inflate(R.layout.tab_page_category_list, container, false);
+		
+	    if (savedInstanceState != null)
+		{
+			RestoreState(savedInstanceState);
+		}
+		else if (_activeFragment == -1)
+		{
+			SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_CAT_LIST);
+		}
+
+		return  _view;
     }
 
 
@@ -64,14 +115,6 @@ public class CategoryListTabFragment extends Fragment
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-		if (savedInstanceState != null)
-		{
-			RestoreState(savedInstanceState);
-		}
-		else
-		{
-			SetActiveFragment(R.id.mainContainer, R.id.loanCategoryListFragment);
-		}
     }
 	
 
@@ -140,7 +183,7 @@ public class CategoryListTabFragment extends Fragment
 
 		if (fragmentId != -1) 
 		{
-			SetActiveFragment(R.id.mainContainer, fragmentId);
+			SetActiveFragment(R.id.mainContainer, FragmentId.Find(fragmentId));
 		}
 		
 		if (selectedCategory != -1)
@@ -155,9 +198,12 @@ public class CategoryListTabFragment extends Fragment
 	}
 	
 	
-	private void SetActiveFragment(int containerId, int fragmentId) 
+	private void SetActiveFragment(int containerId, FragmentId fragmentId) 
 	{
-		_activeFragment = fragmentId;
+		
+		containerId = EnsureContainerMatch(containerId, fragmentId);
+		
+		_activeFragment = fragmentId.get_id();
 		FragmentManager fm = getChildFragmentManager();
 		Fragment fragment = CreateFragment(fragmentId);
 		
@@ -169,13 +215,38 @@ public class CategoryListTabFragment extends Fragment
 	}
 
 
-	private Fragment CreateFragment(int fragmentId)
+	private int EnsureContainerMatch(int containerId, FragmentId fragmentId) 
+	{
+		if (_view == null) return containerId;
+/**		
+	    LoanListFragment detailFragment = (LoanListFragment) 
+	    		getChildFragmentManager().findFragmentById(R.id.loanListFragment);
+	            
+		LoanDetailFragment detailFragment = (LoanDetailFragment) 
+				getChildFragmentManager().findFragmentById(R.id.loanDetailFragment);
+	    //---if the detail fragment is not in the current activity as myself---
+	    if (detailFragment != null && detailFragment.isInLayout()) {
+	        //---the detail fragment is in the same activity as the master---
+	        //detailFragment.setSelectedPresident(selectedPresident);
+	    } else {
+	        //---the detail fragment is in its own activity---
+*/
+		int id = fragmentId.get_id();
+		if (_view.findViewById(id) != null)
+		{
+			return id;
+		}
+		else return containerId;
+	}
+
+
+	private Fragment CreateFragment(FragmentId fragmentId)
 	{
 		Fragment result = null;
 		
 		switch(fragmentId)
 		{
-		case R.id.loanCategoryListFragment:
+		case LOAN_CAT_LIST:
 			if (_loanCategoryListFragment == null)
 			{
 				_loanCategoryListFragment = new LoanCategoryListFragment();
@@ -184,7 +255,7 @@ public class CategoryListTabFragment extends Fragment
 			result = _loanCategoryListFragment;
 			break;
 			
-		case R.id.loanListFragment:
+		case LOAN_LIST:
 			if (_loanListFragment == null)
 			{
 				_loanListFragment = new LoanListFragment();
@@ -194,7 +265,7 @@ public class CategoryListTabFragment extends Fragment
 			result = _loanListFragment;
 			break;
 			
-		case R.id.loanDetailFragment:
+		case LOAN_DETAIL:
 			if (_loanDetailFragment == null)
 			{
 				_loanDetailFragment = new LoanDetailFragment();
@@ -213,36 +284,15 @@ public class CategoryListTabFragment extends Fragment
 		_selectedCategoryIndex = position;
 		setSelectedCategory(_loanCategoryListFragment.Model.getCategory(position));
 	    
-	    LoanListFragment detailFragment = (LoanListFragment) 
-	    		getChildFragmentManager().findFragmentById(R.id.loanListFragment);
-	            
-	    //---if the detail fragment is not in the current activity as myself---
-	    if (detailFragment != null && detailFragment.isInLayout()) {
-	        //---the detail fragment is in the same activity as the master---
-	        //detailFragment.setSelectedPresident(selectedPresident);
-	    } else {
-	        //---the detail fragment is in its own activity---
-	 	   SetActiveFragment(R.id.mainContainer, R.id.loanListFragment);
-	    }
+	    SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_LIST);
 	}
 	
 	private void SelectLoan(int position) 
 	{
 		_selectedLoanIndex = position;
 		setSelectedLoan(_loanListFragment.getModel().getLoan(position));
-		
-		LoanDetailFragment detailFragment = (LoanDetailFragment) 
-				getChildFragmentManager().findFragmentById(R.id.loanDetailFragment);
 	        
-	   //---if the detail fragment is not in the current activity as myself---
-	   if (detailFragment != null && detailFragment.isInLayout()) {
-	       //---the detail fragment is in the same activity as the master---
-	       //detailFragment.setSelectedPresident(selectedPresident);
-	   } else 
-	   {
-	       //---the detail fragment is in its own activity---
-		   SetActiveFragment(R.id.mainContainer, R.id.loanDetailFragment);
-	   }
+		SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_DETAIL);
 	}
 
 
