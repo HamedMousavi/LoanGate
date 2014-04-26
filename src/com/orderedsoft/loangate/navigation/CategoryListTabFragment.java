@@ -31,7 +31,6 @@ public class CategoryListTabFragment extends Fragment
 	private LoanListFragment _loanListFragment;
 	private LoanDetailFragment _loanDetailFragment;
 	private int _activeFragment = -1;
-	private View _view;
 
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
@@ -55,18 +54,8 @@ public class CategoryListTabFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-	    _view = inflater.inflate(R.layout.tab_page_category_list, container, false);
-    	
-		if (savedInstanceState != null)
-		{
-			RestoreState(savedInstanceState);
-		}
-		else
-		{
-			SetActiveFragment(R.id.mainContainer, R.id.loanCategoryListFragment);
-		}
-
-		return  _view;
+	    View view = inflater.inflate(R.layout.tab_page_category_list, container, false);
+		return  view;
     }
 
 
@@ -75,6 +64,14 @@ public class CategoryListTabFragment extends Fragment
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
+		if (savedInstanceState != null)
+		{
+			RestoreState(savedInstanceState);
+		}
+		else
+		{
+			SetActiveFragment(R.id.mainContainer, R.id.loanCategoryListFragment);
+		}
     }
 	
 
@@ -167,7 +164,7 @@ public class CategoryListTabFragment extends Fragment
 		FragmentTransaction transaction = fm.beginTransaction();
 		transaction.replace(containerId, fragment);
 		transaction.show(fragment);
-		//transaction.addToBackStack(null);
+		transaction.addToBackStack(null);
 		transaction.commit();
 	}
 
