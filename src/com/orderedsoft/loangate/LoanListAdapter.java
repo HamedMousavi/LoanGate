@@ -46,7 +46,7 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 		}
 		
 		Loan item = _items.get(position);
-		ExchangeData(info, item);
+		if (info != null && item != null) ExchangeData(info, item);
 		
 		return view;
 	}

@@ -12,16 +12,22 @@ public final class R {
     }
     public static final class color {
         public static final int dark_background_light=0x7f040001;
-        public static final int dark_black=0x7f040008;
-        public static final int dark_gray_light=0x7f040009;
-        public static final int dark_gray_mid=0x7f04000a;
+        public static final int dark_black=0x7f04000c;
+        public static final int dark_gray_light=0x7f04000d;
+        public static final int dark_gray_mid=0x7f04000e;
+        public static final int dark_green_light=0x7f040010;
+        public static final int dark_green_mid=0x7f04000f;
+        public static final int dark_list_background=0x7f040004;
+        public static final int dark_list_normal_item_bk=0x7f040007;
+        public static final int dark_list_selected_item_bk=0x7f040005;
+        public static final int dark_list_selecting_item_bk=0x7f040006;
         public static final int dark_lit_led_background=0x7f040002;
         public static final int dark_normal_led_background=0x7f040003;
         public static final int dark_normal_tab_background=0x7f040000;
-        public static final int dark_orange_light=0x7f040006;
-        public static final int dark_text_dim=0x7f040004;
-        public static final int dark_text_light=0x7f040005;
-        public static final int dark_white=0x7f040007;
+        public static final int dark_orange_light=0x7f04000a;
+        public static final int dark_text_dim=0x7f040008;
+        public static final int dark_text_light=0x7f040009;
+        public static final int dark_white=0x7f04000b;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -45,18 +51,19 @@ public final class R {
         public static final int ic_launcher=0x7f020008;
         public static final int icon1=0x7f020009;
         public static final int list=0x7f02000a;
-        public static final int manufactory=0x7f02000b;
-        public static final int plane=0x7f02000c;
-        public static final int repair=0x7f02000d;
-        public static final int ring=0x7f02000e;
-        public static final int search=0x7f02000f;
-        public static final int settings=0x7f020010;
-        public static final int store=0x7f020011;
-        public static final int tab_header_background=0x7f020012;
-        public static final int tab_header_divider=0x7f020013;
-        public static final int tab_header_foreground=0x7f020014;
-        public static final int tab_header_led=0x7f020015;
-        public static final int wedding=0x7f020016;
+        public static final int list_item_background=0x7f02000b;
+        public static final int manufactory=0x7f02000c;
+        public static final int plane=0x7f02000d;
+        public static final int repair=0x7f02000e;
+        public static final int ring=0x7f02000f;
+        public static final int search=0x7f020010;
+        public static final int settings=0x7f020011;
+        public static final int store=0x7f020012;
+        public static final int tab_header_background=0x7f020013;
+        public static final int tab_header_divider=0x7f020014;
+        public static final int tab_header_foreground=0x7f020015;
+        public static final int tab_header_led=0x7f020016;
+        public static final int wedding=0x7f020017;
     }
     public static final class id {
         public static final int action_settings=0x7f090017;

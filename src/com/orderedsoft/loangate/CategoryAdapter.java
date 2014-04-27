@@ -61,7 +61,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		}
 		
 		LoanCategory item = _items.get(position);
-		ExchangeData(info, item);
+		if (info != null && item != null) ExchangeData(info, item);
 		
 		return view;
 	}
