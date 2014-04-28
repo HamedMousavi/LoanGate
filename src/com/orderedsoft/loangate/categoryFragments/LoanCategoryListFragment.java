@@ -1,6 +1,7 @@
 package com.orderedsoft.loangate.categoryFragments;
 import com.orderedsoft.loangate.CategoryActivityViewModel;
 import com.orderedsoft.loangate.CategoryAdapter;
+import com.orderedsoft.loangate.Events;
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.models.LoanCategory;
 
@@ -21,10 +22,17 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 {
 	
 	private View _view;
-	public CategoryActivityViewModel Model = null;
+	private CategoryActivityViewModel _model;
 	private ArrayAdapter<LoanCategory> _categoriesAdapter;
 	private ListView _lvw_categories;
-
+	
+	
+	public LoanCategoryListFragment()
+	{
+		super();
+		Events.get_instance().RegisterEventObserver(this);
+	}
+	
 	
 	public void SetCategoryListItemClickListener(OnItemClickListener listener) 
 	{
@@ -37,11 +45,6 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-
-        if (Model == null) 
-    	{
-    		Model = new CategoryActivityViewModel(this);
-    	}
 	}
 
 	
@@ -76,16 +79,16 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	{
         // Create & display view 
         ReBindCategories();
-		Model.ReloadCategories();
+		get_model().ReloadCategories();
 	}
 
 	
 	protected void ReBindCategories()
 	{
     	// Bind ListView to Categories
-		if (Model.getCategories() != null) {
+		if (get_model().getCategories() != null) {
 	    	_categoriesAdapter = new CategoryAdapter(
-	    			_lvw_categories.getContext(), R.layout.list_item_category, Model.getCategories());
+	    			_lvw_categories.getContext(), R.layout.list_item_category, get_model().getCategories());
 	    	_lvw_categories.setItemsCanFocus(false);
 	    	_lvw_categories.setAdapter(_categoriesAdapter);
 	    	_lvw_categories.setOnItemClickListener(_onCategoryItemClicked);
@@ -99,13 +102,28 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	}
 	
 	
-	/** UNDONE: REPLACE THIS WITH BEANS PROPERTY CHANGED EVENT */
-	public void OnSubjectChanged(Object observable, Object params)
+	public void OnEvent(int eventId, Object observable, Object params)
 	{
-		ReBindCategories();
+		if (eventId == Events.CategoriesLoadCompleted) ReBindCategories();
 	}
 
 	
-	 private AdapterView.OnItemClickListener _onCategoryItemClicked;
+	 /**
+	 * @return the _model
+	 */
+	public CategoryActivityViewModel get_model() {
+		return _model;
+	}
+
+
+	/**
+	 * @param _model the _model to set
+	 */
+	public void set_model(CategoryActivityViewModel model) {
+		_model = model;
+	}
+
+
+	private AdapterView.OnItemClickListener _onCategoryItemClicked;
 
 }

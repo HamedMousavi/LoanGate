@@ -4,7 +4,6 @@ package com.orderedsoft.loangate;
 import java.util.List;
 
 import HLib.Convert;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +18,14 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 	
 	private List<Loan> _items;
 	private Context _context;
+	private int _resource;
 
 	
 	public LoanListAdapter(Context context, int resource, List<Loan> objects) 
 	{
 		super(context, resource, objects);
 		
+		_resource = resource;
 		_items = objects;
 		_context = context;
 	}
@@ -65,8 +66,8 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 
 
 	private View CreateView(LoanItemViewControls info) {
-		LayoutInflater inflater = ((Activity)_context).getLayoutInflater();
-		View view = inflater.inflate(R.layout.list_item_loan, null);
+		LayoutInflater inflater = LayoutInflater.from(_context);
+		View view = inflater.inflate(_resource, null, false);
 		
 		info.set_tbxLoanAmount((TextView)view.findViewById(R.id.tbxLoanAmount));
 		info.set_tbxLoanAmountUnit((TextView)view.findViewById(R.id.tbxLoanAmountUnit));

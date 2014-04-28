@@ -2,6 +2,9 @@ package com.orderedsoft.loangate.navigation;
 
 
 
+import com.orderedsoft.loangate.CategoryActivityViewModel;
+import com.orderedsoft.loangate.Events;
+import com.orderedsoft.loangate.LoanListViewModel;
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.categoryFragments.LoanCategoryListFragment;
 import com.orderedsoft.loangate.categoryFragments.LoanDetailFragment;
@@ -9,7 +12,9 @@ import com.orderedsoft.loangate.categoryFragments.LoanListFragment;
 import com.orderedsoft.loangate.models.Loan;
 import com.orderedsoft.loangate.models.LoanCategory;
 
+import HLib.IObserver;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Checkable;
 
 
-public class CategoryListTabFragment extends Fragment
+public class CategoryListTabFragment extends Fragment implements IObserver
 {
 	
 	private LoanCategory _selectedCategory;
@@ -35,6 +40,7 @@ public class CategoryListTabFragment extends Fragment
 	private View _view;
 	private AdapterView<?> _categoryAdapterView;
 	private AdapterView<?> _loanAdapterView;
+	private ProgressDialog _progressDialog;
 	
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
@@ -98,6 +104,13 @@ public class CategoryListTabFragment extends Fragment
 	}
 	
 	
+	public CategoryListTabFragment()
+	{
+		super();
+		Events.get_instance().RegisterEventObserver(this);
+	}
+	
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
@@ -121,7 +134,9 @@ public class CategoryListTabFragment extends Fragment
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-    }
+
+		_progressDialog = new ProgressDialog(getActivity());
+	}
 	
 
 	@Override
@@ -141,8 +156,11 @@ public class CategoryListTabFragment extends Fragment
     @Override
     public void onPause() 
     {
-        super.onPause();
+    	HideMessageBox();
+    	super.onPause();
     }
+	
+		
 
 
 	@Override
@@ -222,7 +240,6 @@ public class CategoryListTabFragment extends Fragment
 	
 	private void SetActiveFragment(int containerId, FragmentId fragmentId) 
 	{
-		
 		containerId = EnsureContainerMatch(containerId, fragmentId);
 		
 		_activeFragment = fragmentId.get_id();
@@ -271,16 +288,21 @@ public class CategoryListTabFragment extends Fragment
 		case LOAN_CAT_LIST:
 			if (_loanCategoryListFragment == null)
 			{
+				MessageBox(R.string.message_load_title, R.string.message_load_category_list);
+
 				_loanCategoryListFragment = new LoanCategoryListFragment();
+				_loanCategoryListFragment.set_model(new CategoryActivityViewModel());
 				_loanCategoryListFragment.SetCategoryListItemClickListener(_onCategoryItemClicked);
 			}			
 			result = _loanCategoryListFragment;
 			break;
 			
 		case LOAN_LIST:
+			MessageBox(R.string.message_load_title, R.string.message_load_loan_list);
 			if (_loanListFragment == null)
 			{
 				_loanListFragment = new LoanListFragment();
+				_loanListFragment.set_model(new LoanListViewModel());
 				_loanListFragment.SetLoanListItemClickListener(_onLoanItemClicked);
 			}
 			_loanListFragment.setLoanCategory(getSelectedCategory());
@@ -288,6 +310,7 @@ public class CategoryListTabFragment extends Fragment
 			break;
 			
 		case LOAN_DETAIL:
+			MessageBox(R.string.message_load_title, R.string.message_load_loan_detail);
 			if (_loanDetailFragment == null)
 			{
 				_loanDetailFragment = new LoanDetailFragment();
@@ -304,7 +327,7 @@ public class CategoryListTabFragment extends Fragment
 	private void SelectCategory(int position, boolean updateGui) 
 	{
 		_selectedCategoryIndex = position;
-		setSelectedCategory(_loanCategoryListFragment.Model.getCategory(position));
+		setSelectedCategory(_loanCategoryListFragment.get_model().getCategory(position));
 	    
 	    SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_LIST);
 	    
@@ -318,7 +341,7 @@ public class CategoryListTabFragment extends Fragment
 	private void SelectLoan(int position, boolean updateGui) 
 	{
 		_selectedLoanIndex = position;
-		setSelectedLoan(_loanListFragment.getModel().getLoan(position));
+		setSelectedLoan(_loanListFragment.get_model().getLoan(position));
 	        
 		SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_DETAIL);
 	    
@@ -326,6 +349,15 @@ public class CategoryListTabFragment extends Fragment
 	    {
 	    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
 	    }
+	}
+
+
+	private void MessageBox(int messageTitle, int messageContent) 
+	{
+		_progressDialog.setCancelable(false);
+		_progressDialog.setTitle(getActivity().getResources().getText(messageTitle));
+		_progressDialog.setMessage(getActivity().getResources().getText(messageContent));
+		_progressDialog.show();
 	}
 
 	
@@ -368,5 +400,26 @@ public class CategoryListTabFragment extends Fragment
 	 */
 	public void setSelectedCategory(LoanCategory selectedCategory) {
 		this._selectedCategory = selectedCategory;
+	}
+
+
+	private void HideMessageBox() 
+	{
+		if (_progressDialog.isShowing()) 
+    	{
+			_progressDialog.dismiss();
+        }
+	}
+
+
+	@Override
+	public void OnEvent(int eventId, Object observable, Object params) 
+	{
+		if (eventId == Events.CategoriesLoadCompleted ||
+			eventId == Events.LoanListLoadCompleted ||
+			eventId == Events.LoanDetailLoadCompleted)
+		{
+			HideMessageBox();
+		}
 	}
 }

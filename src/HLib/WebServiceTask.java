@@ -1,6 +1,8 @@
 package HLib;
 
 
+import com.orderedsoft.loangate.Events;
+
 import android.os.AsyncTask;
 
 
@@ -8,24 +10,15 @@ public class WebServiceTask<T> extends  AsyncTask<Void, Void, T>
 {
 
 	private WebServiceInvoker<T> _invoker;
-	private IObserver _observer;
+	private Object _eventSource;
 
 
-	public WebServiceTask(WebServiceInvoker<T> invoker)
+	public WebServiceTask(WebServiceInvoker<T> invoker, Object eventSource)
 	{
 		_invoker = invoker;	
-		_observer = null;
+		_eventSource = eventSource;
 	}
 	
-
-	/** UNDONE: replace one observer with an event */
-	public WebServiceTask(WebServiceInvoker<T> invoker,
-			IObserver completeObserver)
-	{
-		_invoker = invoker;	
-		_observer = completeObserver;	
-	}
-
 
 	@Override
 	protected T doInBackground(Void... arg0) 
@@ -37,6 +30,6 @@ public class WebServiceTask<T> extends  AsyncTask<Void, Void, T>
 	@Override
 	protected void onPostExecute(T result)
 	{
-		if (_observer != null) _observer.OnSubjectChanged(_invoker, result);
+		Events.get_instance().SendEvent(Events.AsyncOperationCompleted, _eventSource, result);
 	}
 }

@@ -1,14 +1,15 @@
 package com.orderedsoft.loangate.serviceProxies;
 
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import com.orderedsoft.loangate.models.Loan;
 
-import HLib.IObserver;
 import HLib.WebServiceInvoker;
 import HLib.WebServiceTask;
+
 
 public class LoansProxy {
 
@@ -26,12 +27,12 @@ public class LoansProxy {
 	}
 	
 	
-	public void Load(IObserver loadCompleteObserver)
+	public void Load()
 	{
 		WebServiceInvoker<List<Loan>> invoker = 
 				new WebServiceInvoker<List<Loan>>(_url, new LoanXmlHandler());
 
-		new WebServiceTask<List<Loan>>(invoker, loadCompleteObserver).execute();
+		new WebServiceTask<List<Loan>>(invoker, this).execute();
 	}
 
 

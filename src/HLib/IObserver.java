@@ -2,5 +2,5 @@ package HLib;
 
 public abstract interface IObserver 
 {
-	public abstract void OnSubjectChanged(Object observable, Object params);
+	public abstract void OnEvent(int eventId, Object observable, Object params);
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.orderedsoft.loangate.models.LoanCategory;
 
-import HLib.IObserver;
 import HLib.WebServiceInvoker;
 import HLib.WebServiceTask;
 
@@ -29,11 +28,14 @@ public class CategoriesProxy
 	}
 	
 	
-	public void LoadCategories(IObserver loadCompleteObserver)
+	public void LoadCategories()
 	{
 		WebServiceInvoker<List<LoanCategory>> invoker = 
 				new WebServiceInvoker<List<LoanCategory>>(_url, new CategoryXmlHandler());
 
-		new WebServiceTask<List<LoanCategory>>(invoker, loadCompleteObserver).execute();
+		WebServiceTask<List<LoanCategory>> task = 
+				new WebServiceTask<List<LoanCategory>>(invoker, this);
+
+		task.execute();
 	}
 }

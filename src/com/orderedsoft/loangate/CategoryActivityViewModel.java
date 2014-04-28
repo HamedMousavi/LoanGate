@@ -1,9 +1,8 @@
 package com.orderedsoft.loangate;
 
+
 import java.util.List;
-
 import HLib.IObserver;
-
 import com.orderedsoft.loangate.models.LoanCategory;
 import com.orderedsoft.loangate.serviceProxies.CategoriesProxy;
 
@@ -12,19 +11,15 @@ public class CategoryActivityViewModel implements IObserver
 {
 
 	private List<LoanCategory> _categories;
-	private IObserver _observer;
+	private CategoriesProxy _proxy;
 	
-	
-	public CategoryActivityViewModel(IObserver modelEventObserver)
-	{
-		_observer = modelEventObserver;
-	}
-
 	
 	public void ReloadCategories()
 	{
-		CategoriesProxy proxy = new CategoriesProxy("http://10.0.2.2/LoanGate/api/loancategories");
-		proxy.LoadCategories(this);
+		Events.get_instance().RegisterEventObserver(this);
+
+		_proxy = new CategoriesProxy("http://10.0.2.2/LoanGate/api/loancategories");
+		_proxy.LoadCategories();
 	}
 
 
@@ -41,21 +36,24 @@ public class CategoryActivityViewModel implements IObserver
 	 */
 	private void setCategories(List<LoanCategory> _categories) {
 		this._categories = _categories;
-		_observer.OnSubjectChanged(this, _categories);
+		Events.get_instance().SendEvent(Events.CategoriesLoadCompleted, this, _categories);
 	}
 	
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void OnSubjectChanged(Object observable, Object params) 
+	public void OnEvent(int eventId, Object observable, Object params) 
 	{
-		List<LoanCategory> categories = null;
-		if (params != null)
+		if (eventId == Events.AsyncOperationCompleted && observable == _proxy)
 		{
-			categories = (List<LoanCategory>)params;
+			List<LoanCategory> categories = null;
+			if (params != null)
+			{
+				categories = (List<LoanCategory>)params;
+			}
+	
+			setCategories(categories);
 		}
-
-		setCategories(categories);
 	}
 
 

@@ -1,5 +1,6 @@
 package com.orderedsoft.loangate;
 
+
 import java.util.List;
 
 import com.orderedsoft.loangate.models.Loan;
@@ -12,18 +13,17 @@ public class LoanListViewModel implements IObserver
 {
 	
 	private List<Loan> _loans;
-	private IObserver _observer;
+	private LoansProxy _proxy;
 	
-	
-	public LoanListViewModel(IObserver modelEventObserver) {
-		_observer = modelEventObserver;
-	}
 
 	public void ReloadLoans(long loanId) {
-		LoansProxy proxy = new LoansProxy("http://10.0.2.2/LoanGate/api/loanlist/" + Long.toString(loanId));
-		proxy.Load(this);
+		Events.get_instance().RegisterEventObserver(this);
+
+		_proxy = new LoansProxy("http://10.0.2.2/LoanGate/api/loanlist/" + Long.toString(loanId));
+		_proxy.Load();
 	}
 
+	
 	public List<Loan> getLoans() {
 		return _loans;
 	}
@@ -31,20 +31,23 @@ public class LoanListViewModel implements IObserver
 	public void setLoans(List<Loan> loans)
 	{
 		_loans = loans;
-		_observer.OnSubjectChanged(this, _loans);
+		Events.get_instance().SendEvent(Events.LoanListLoadCompleted, this, _loans);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void OnSubjectChanged(Object observable, Object params) 
+	public void OnEvent(int eventId, Object observable, Object params) 
 	{
-		List<Loan> list = null;
-		if (params != null)
+		if (eventId == Events.AsyncOperationCompleted && observable == _proxy)
 		{
-			list = (List<Loan>)params;
+			List<Loan> list = null;
+			if (params != null)
+			{
+				list = (List<Loan>)params;
+			}
+	
+			setLoans(list);
 		}
-
-		setLoans(list);
 	}
 
 	public Loan getLoan(int position) {

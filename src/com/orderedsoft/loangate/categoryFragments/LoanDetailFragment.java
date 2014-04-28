@@ -15,10 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-/**
- * @author Hamed
- *
- */
+
 public class LoanDetailFragment extends Fragment 
 {
 

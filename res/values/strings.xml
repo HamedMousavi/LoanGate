@@ -10,4 +10,8 @@
     <string name="category_icon_description">Category Icon</string>
     <string name="expires_at">Expires at</string>
     <string name="separator">•</string>
+    <string name="message_load_title">Loading</string>
+    <string name="message_load_loan_list">Please wait while loading list of available loans...</string>
+    <string name="message_load_category_list">Please wait while loading loan categories...</string>
+    <string name="message_load_loan_detail">Please wait while loading loan detail...</string>
 </resources>

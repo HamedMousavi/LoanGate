@@ -1,5 +1,7 @@
 package com.orderedsoft.loangate.categoryFragments;
 
+
+import com.orderedsoft.loangate.Events;
 import com.orderedsoft.loangate.LoanListAdapter;
 import com.orderedsoft.loangate.LoanListViewModel;
 import com.orderedsoft.loangate.R;
@@ -18,15 +20,23 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
-
 public class LoanListFragment extends Fragment implements IObserver
 {
+	
 	private View _view;
 	private LoanListViewModel _model = null;
 	private ArrayAdapter<Loan> _loanListAdapter;
 	private AdapterView.OnItemClickListener _onLoanListItemClicked;
 	private LoanCategory _category;
+	private ListView _lvw_loans;
 
+	
+	public LoanListFragment()
+	{
+		super();
+		Events.get_instance().RegisterEventObserver(this);
+	}
+	
 	
 	public void SetLoanListItemClickListener(OnItemClickListener listener) 
 	{
@@ -39,10 +49,6 @@ public class LoanListFragment extends Fragment implements IObserver
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-		if (getModel() == null) 
-		{
-			setModel(new LoanListViewModel(this));
-		}
 	}
 	
 	
@@ -50,6 +56,7 @@ public class LoanListFragment extends Fragment implements IObserver
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
     	_view = inflater.inflate(R.layout.activity_loan_list, container, false);
+    	_lvw_loans = (ListView) _view.findViewById(R.id.lvw_loans);
         return _view;
     }
     
@@ -67,15 +74,15 @@ public class LoanListFragment extends Fragment implements IObserver
 	{
         // Create & display view 
         ReBindLoans();
-		getModel().ReloadLoans(_category.getId());
+		get_model().ReloadLoans(_category.getId());
 	}
 
 	protected void ReBindLoans()
 	{
     	// Bind ListView to Categories
-		if (getModel().getLoans() != null) {
+		if (get_model().getLoans() != null) {
 	    	_loanListAdapter = new LoanListAdapter(
-	    			_view.getContext(), R.layout.list_item_loan, getModel().getLoans());
+	    			_lvw_loans.getContext(), R.layout.list_item_loan, get_model().getLoans());
 	    	ListView lvwCategories = (ListView)_view.findViewById(R.id.lvw_loans);
 			lvwCategories.setAdapter(_loanListAdapter);
 			lvwCategories.setOnItemClickListener(_onLoanListItemClicked);
@@ -89,27 +96,27 @@ public class LoanListFragment extends Fragment implements IObserver
 	}
 	
 	
-	/** UNDONE: REPLACE THIS WITH BEANS PROPERTY CHANGED EVENT */
-	public void OnSubjectChanged(Object observable, Object params)
+	public void OnEvent(int eventId, Object observable, Object params)
 	{
-		ReBindLoans();
+		if (eventId == Events.LoanListLoadCompleted) ReBindLoans();
 	}
 
 	public void setLoanCategory(LoanCategory category) {
 		_category = category;
+		get_model().ReloadLoans(_category.getId());
 	}
 
 	/**
 	 * @return the model
 	 */
-	public LoanListViewModel getModel() {
+	public LoanListViewModel get_model() {
 		return _model;
 	}
 
 	/**
 	 * @param model the model to set
 	 */
-	private void setModel(LoanListViewModel model) {
+	public void set_model(LoanListViewModel model) {
 		_model = model;
 	}
 }
