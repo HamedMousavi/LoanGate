@@ -19,28 +19,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Checkable;
-import android.widget.ListView;
 
 
 public class CategoryListTabFragment extends Fragment
 {
 	
 	private LoanCategory _selectedCategory;
-	private int _selectedCategoryIndex;
+	private int _selectedCategoryIndex = -1;
 	private Loan _selectedLoan;
-	private int _selectedLoanIndex;
+	private int _selectedLoanIndex = -1;
 	private LoanCategoryListFragment _loanCategoryListFragment;
 	private LoanListFragment _loanListFragment;
 	private LoanDetailFragment _loanDetailFragment;
 	private int _activeFragment = -1;
 	private View _view;
+	private AdapterView<?> _categoryAdapterView;
+	private AdapterView<?> _loanAdapterView;
 	
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-			HighlightListItem(R.id.lvw_loans, _selectedLoanIndex, false);
+			_categoryAdapterView = parent;
+			HighlightListItem(_loanAdapterView, _selectedLoanIndex, false);
 			SelectCategory(position, false);
 		}
 	};
@@ -50,6 +52,7 @@ public class CategoryListTabFragment extends Fragment
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
+			_loanAdapterView = parent;
 			SelectLoan(position, false);
 		}
 	};
@@ -162,6 +165,15 @@ public class CategoryListTabFragment extends Fragment
 	    }*/
 	}	 
 
+	
+    @Override
+    public void onResume() 
+    {
+        super.onResume();
+
+		RestoreSelections();
+    }
+
 
 	@Override
     public void onSaveInstanceState (Bundle outState) {
@@ -198,6 +210,13 @@ public class CategoryListTabFragment extends Fragment
 		{
 			SelectLoan(selectedLoan, true);
 		}
+	}
+
+
+	private void RestoreSelections() 
+	{
+    	HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
+    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
 	}
 	
 	
@@ -291,7 +310,7 @@ public class CategoryListTabFragment extends Fragment
 	    
 	    if (updateGui)
 	    {
-	    	HighlightListItem(R.id.lvw_categories, position, true);
+	    	HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
 	    }
 	}
 
@@ -305,19 +324,19 @@ public class CategoryListTabFragment extends Fragment
 	    
 	    if (updateGui)
 	    {
-	    	HighlightListItem(R.id.lvw_loans, position, true);
+	    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
 	    }
 	}
 
 	
-	private void HighlightListItem(int listViewId, int itemIndex, boolean highlight) 
+	private void HighlightListItem(AdapterView<?> adapterView, int itemIndex, boolean highlight)
 	{
-    	ListView lv = (ListView)_view.findViewById(listViewId);
-    	if (lv != null)
+    	if (adapterView != null)
     	{
-    		Checkable child = (Checkable) lv.getChildAt(itemIndex);
+    		Checkable child = (Checkable) adapterView.getChildAt(itemIndex);
     		if (child != null) 
 			{
+    			child.toggle();
 				if ( (highlight && !child.isChecked()) ||
 					 (!highlight && child.isChecked()) ) child.toggle();
 			}
@@ -326,7 +345,6 @@ public class CategoryListTabFragment extends Fragment
 
 
 	private Loan getSelectedLoan() {
-		// TODO Auto-generated method stub
 		return _selectedLoan;
 	}
 	

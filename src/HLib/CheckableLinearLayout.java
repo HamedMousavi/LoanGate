@@ -82,88 +82,92 @@ setCheckedRecursive((ViewGroup)v, checked);
 }
 }
  
-/**************************/
-/** Drawable States **/
-/**************************/
+	/**************************/
+	/** Drawable States **/
+	/**************************/
+	 
+	@Override
+	protected int[] onCreateDrawableState(int extraSpace) {
+		final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+		if (isChecked()) {
+			mergeDrawableStates(drawableState, CHECKED_STATE_SET);
+		}
+		return drawableState;
+	}
+	 
+	@Override
+	protected void drawableStateChanged() {
+		super.drawableStateChanged();
+		 
+		Drawable drawable = getBackground();
+		if (drawable != null) {
+			int[] myDrawableState = getDrawableState();
+			drawable.setState(myDrawableState);
+			invalidate();
+		}
+	}
  
-@Override
-protected int[] onCreateDrawableState(int extraSpace) {
-final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-if (isChecked()) {
-mergeDrawableStates(drawableState, CHECKED_STATE_SET);
-}
-return drawableState;
-}
- 
-@Override
-protected void drawableStateChanged() {
-super.drawableStateChanged();
- 
-Drawable drawable = getBackground();
-if (drawable != null) {
-int[] myDrawableState = getDrawableState();
-drawable.setState(myDrawableState);
-invalidate();
-}
-}
- 
-/**************************/
-/** State persistency **/
-/**************************/
- 
-static class SavedState extends BaseSavedState {
-boolean checked;
- 
-SavedState(Parcelable superState) {
-super(superState);
-}
- 
-private SavedState(Parcel in) {
-super(in);
-checked = (Boolean)in.readValue(null);
-}
- 
-@Override
-public void writeToParcel(Parcel out, int flags) {
-super.writeToParcel(out, flags);
-out.writeValue(checked);
-}
- 
-@Override
-public String toString() {
-return "CheckableLinearLayout.SavedState{"
-+ Integer.toHexString(System.identityHashCode(this))
-+ " checked=" + checked + "}";
-}
- 
-public static final Parcelable.Creator<SavedState> CREATOR
-= new Parcelable.Creator<SavedState>() {
-public SavedState createFromParcel(Parcel in) {
-return new SavedState(in);
-}
- 
-public SavedState[] newArray(int size) {
-return new SavedState[size];
-}
-};
-}
- 
-@Override
-public Parcelable onSaveInstanceState() {
-// Force our ancestor class to save its state
-Parcelable superState = super.onSaveInstanceState();
-SavedState ss = new SavedState(superState);
- 
-ss.checked = isChecked();
-return ss;
-}
- 
-@Override
-public void onRestoreInstanceState(Parcelable state) {
-SavedState ss = (SavedState) state;
- 
-super.onRestoreInstanceState(ss.getSuperState());
-setChecked(ss.checked);
-requestLayout();
-}
+	/**************************/
+	/** State persistency **/
+	/**************************/
+	 
+	static class SavedState extends BaseSavedState 
+	{
+		boolean checked;
+	 
+		SavedState(Parcelable superState) {
+			super(superState);
+		}
+	 
+		private SavedState(Parcel in) {
+			super(in);
+			checked = (Boolean)in.readValue(null);
+		}
+	 
+		@Override
+		public void writeToParcel(Parcel out, int flags) {
+			super.writeToParcel(out, flags);
+			out.writeValue(checked);
+		}
+	 
+		@Override
+		public String toString() {
+			return "CheckableLinearLayout.SavedState{" + Integer.toHexString(System.identityHashCode(this))
+			+ " checked=" + checked + "}";
+		}
+	 
+		public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() 
+		{
+				public SavedState createFromParcel(Parcel in) 
+				{
+					return new SavedState(in);
+				}
+	 
+				public SavedState[] newArray(int size) 
+				{
+					return new SavedState[size];
+				}
+		};
+	}
+	 
+	@Override
+	public Parcelable onSaveInstanceState() 
+	{
+		// Force our ancestor class to save its state
+		Parcelable superState = super.onSaveInstanceState();
+		SavedState ss = new SavedState(superState);
+		 
+		ss.checked = isChecked();
+		return ss;
+	}
+	 
+	@Override
+	public void onRestoreInstanceState(Parcelable state) 
+	{
+		SavedState ss = (SavedState) state;
+		 
+		super.onRestoreInstanceState(ss.getSuperState());
+		setChecked(ss.checked);
+		requestLayout();
+	}
 }
