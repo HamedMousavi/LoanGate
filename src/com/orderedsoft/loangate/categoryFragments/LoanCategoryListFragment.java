@@ -23,6 +23,7 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	private View _view;
 	public CategoryActivityViewModel Model = null;
 	private ArrayAdapter<LoanCategory> _categoriesAdapter;
+	private ListView _lvw_categories;
 
 	
 	public void SetCategoryListItemClickListener(OnItemClickListener listener) 
@@ -55,6 +56,9 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
     	_view = inflater.inflate(R.layout.activity_loan_category_list, container, false);
+    	
+    	_lvw_categories = (ListView) _view.findViewById(R.id.lvw_categories);
+    	
         return _view;
     }
     
@@ -81,10 +85,10 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
     	// Bind ListView to Categories
 		if (Model.getCategories() != null) {
 	    	_categoriesAdapter = new CategoryAdapter(
-	    			_view.getContext(), R.layout.list_item_category, Model.getCategories());
-	    	ListView lvwCategories = (ListView)_view.findViewById(R.id.lvw_categories);
-			lvwCategories.setAdapter(_categoriesAdapter);
-			lvwCategories.setOnItemClickListener(_onCategoryItemClicked);
+	    			_lvw_categories.getContext(), R.layout.list_item_category, Model.getCategories());
+	    	_lvw_categories.setItemsCanFocus(false);
+	    	_lvw_categories.setAdapter(_categoriesAdapter);
+	    	_lvw_categories.setOnItemClickListener(_onCategoryItemClicked);
 			
 			_categoriesAdapter.notifyDataSetChanged();
 		}

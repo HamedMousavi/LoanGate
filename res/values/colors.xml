@@ -3,9 +3,9 @@
     <color name="dark_normal_tab_background">#142030</color>
     <color name="dark_background_light">#142030</color>
     <color name="dark_lit_led_background">@color/dark_green_mid</color>
-    <color name="dark_normal_led_background">#354050</color>
+    <color name="dark_normal_led_background">@android:color/transparent</color>
     <color name="dark_list_background">@color/dark_gray_light</color>
-    <color name="dark_list_selected_item_bk">@color/dark_green_mid</color>
+    <color name="dark_list_selected_item_bk">@color/dark_green_light</color>
     <color name="dark_list_selecting_item_bk">@color/dark_green_light</color>
     <color name="dark_list_normal_item_bk">@color/dark_white</color>
     <color name="dark_text_dim">@color/dark_gray_light</color>
@@ -16,5 +16,5 @@
     <color name="dark_gray_light">#cbcbcb</color>
     <color name="dark_gray_mid">#808080</color>
     <color name="dark_green_mid">#74b855</color>
-    <color name="dark_green_light">#b4e895</color>
+    <color name="dark_green_light">#f3fee7</color>
 </resources>

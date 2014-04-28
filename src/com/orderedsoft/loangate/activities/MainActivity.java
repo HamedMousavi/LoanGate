@@ -51,28 +51,28 @@ public class MainActivity extends FragmentActivity
             _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
             Context context = _tabHost.getContext();
             _tabHost.addTab(
-            		_tabHost.newTabSpec("tab1").
+            		_tabHost.newTabSpec("list").
             			setIndicator(createTabView(context,
             					getResources().getText(R.string.list), 
             					getResources().getDrawable(R.drawable.list))),
                     CategoryListTabFragment.class, null);
 
             _tabHost.addTab(
-            		_tabHost.newTabSpec("tab2").
+            		_tabHost.newTabSpec("search").
             			setIndicator(createTabView(context,
             					getResources().getText(R.string.search), 
             					getResources().getDrawable(R.drawable.search))),
                     SearchTabFragment.class, null);
 
             _tabHost.addTab(
-            		_tabHost.newTabSpec("tab3").
+            		_tabHost.newTabSpec("notify").
         			setIndicator(createTabView(context,
         					getResources().getText(R.string.notify), 
         					getResources().getDrawable(R.drawable.bell))),
                     NotifyTabFragment.class, null);
 
             _tabHost.addTab(
-            		_tabHost.newTabSpec("tab4").
+            		_tabHost.newTabSpec("settings").
         			setIndicator(createTabView(context,
         					getResources().getText(R.string.settings), 
         					getResources().getDrawable(R.drawable.settings))),
@@ -83,7 +83,7 @@ public class MainActivity extends FragmentActivity
 
 	private View createTabView(Context context, CharSequence text, Drawable drawable) 
 	{
-		View view = LayoutInflater.from(context).inflate(R.layout.tab_host_header, null);
+		View view = LayoutInflater.from(context).inflate(R.layout.tab_host_header, null, false);
 		TextView tv = (TextView) view.findViewById(R.id.tbxTabTitle);
 		tv.setText(text);
 		

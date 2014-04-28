@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--  Active tab -->
-	<item android:state_selected="true" android:state_focused="false"
-		android:state_pressed="false" android:drawable="@color/dark_list_selected_item_bk" />
-	<!--  Inactive tab -->
-	<item android:state_selected="false" android:state_focused="false"
-		android:state_pressed="false" android:drawable="@color/dark_list_normal_item_bk" />
-	<!--  Pressed tab -->
 	<item android:state_pressed="true" android:drawable="@color/dark_list_selecting_item_bk" />
-	<!--  Selected tab (using d-pad) -->
-	<item android:state_focused="true" android:state_selected="true"
-		android:state_pressed="false" android:drawable="@color/dark_list_selected_item_bk" />
+    <item android:state_checked="true" android:drawable="@color/dark_list_selected_item_bk" />
+    <item android:drawable="@color/dark_white" />
 </selector>

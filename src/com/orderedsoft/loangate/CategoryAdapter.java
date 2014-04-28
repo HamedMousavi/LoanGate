@@ -5,7 +5,6 @@ import java.util.List;
 import com.orderedsoft.loangate.models.LoanCategory;
 
 import HLib.Convert;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,14 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 	private List<LoanCategory> _items;
 	private Context _context;
 	private int[] _imageId;
+	private int _resource;
 
 	
 	public CategoryAdapter(Context context, int resource, List<LoanCategory> objects) 
 	{
 		super(context, resource, objects);
 		
+		_resource = resource;
 		_items = objects;
 		_context = context;
 		_imageId = new int[]
@@ -77,8 +78,8 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 
 
 	private View CreateView(CategoryItemViewControls info) {
-		LayoutInflater inflater = ((Activity)_context).getLayoutInflater();
-		View view = inflater.inflate(R.layout.list_item_category, null);
+		LayoutInflater inflater = LayoutInflater.from(_context);
+		View view = inflater.inflate(_resource, null, false);
 		
 		info.setCategoryCount((TextView)view.findViewById(R.id.tbxCategoryCount));
 		info.setCategoryDescription((TextView)view.findViewById(R.id.tbxCategoryDescription));

@@ -18,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Checkable;
+import android.widget.ListView;
 
 
 public class CategoryListTabFragment extends Fragment
@@ -38,7 +40,8 @@ public class CategoryListTabFragment extends Fragment
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-			SelectCategory(position);
+			HighlightListItem(R.id.lvw_loans, _selectedLoanIndex, false);
+			SelectCategory(position, false);
 		}
 	};
 	 
@@ -47,7 +50,7 @@ public class CategoryListTabFragment extends Fragment
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
-			SelectLoan(position);
+			SelectLoan(position, false);
 		}
 	};
 
@@ -188,12 +191,12 @@ public class CategoryListTabFragment extends Fragment
 		
 		if (selectedCategory != -1)
 		{
-			SelectCategory(selectedCategory);
+			SelectCategory(selectedCategory, true);
 		}
 		
 		if (selectedLoan != -1)
 		{
-			SelectLoan(selectedLoan);
+			SelectLoan(selectedLoan, true);
 		}
 	}
 	
@@ -279,20 +282,46 @@ public class CategoryListTabFragment extends Fragment
 	}
 
 	 
-	private void SelectCategory(int position) 
+	private void SelectCategory(int position, boolean updateGui) 
 	{
 		_selectedCategoryIndex = position;
 		setSelectedCategory(_loanCategoryListFragment.Model.getCategory(position));
 	    
 	    SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_LIST);
+	    
+	    if (updateGui)
+	    {
+	    	HighlightListItem(R.id.lvw_categories, position, true);
+	    }
 	}
-	
-	private void SelectLoan(int position) 
+
+
+	private void SelectLoan(int position, boolean updateGui) 
 	{
 		_selectedLoanIndex = position;
 		setSelectedLoan(_loanListFragment.getModel().getLoan(position));
 	        
 		SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_DETAIL);
+	    
+	    if (updateGui)
+	    {
+	    	HighlightListItem(R.id.lvw_loans, position, true);
+	    }
+	}
+
+	
+	private void HighlightListItem(int listViewId, int itemIndex, boolean highlight) 
+	{
+    	ListView lv = (ListView)_view.findViewById(listViewId);
+    	if (lv != null)
+    	{
+    		Checkable child = (Checkable) lv.getChildAt(itemIndex);
+    		if (child != null) 
+			{
+				if ( (highlight && !child.isChecked()) ||
+					 (!highlight && child.isChecked()) ) child.toggle();
+			}
+    	}
 	}
 
 
