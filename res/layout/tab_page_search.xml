@@ -7,6 +7,11 @@
     <TextView 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Search here!" />
+        android:text="@string/search" />
     
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/under_construction" />
+        
 </LinearLayout>

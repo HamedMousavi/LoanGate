@@ -66,7 +66,7 @@ public final class R {
         public static final int wedding=0x7f020017;
     }
     public static final class id {
-        public static final int action_settings=0x7f090017;
+        public static final int action_settings=0x7f090016;
         public static final int ivwCategoryIcon=0x7f090006;
         public static final int ivwTabIcon=0x7f090010;
         public static final int loanCategoryListFragment=0x7f090013;
@@ -76,7 +76,6 @@ public final class R {
         public static final int lvw_categories=0x7f090000;
         public static final int lvw_loans=0x7f090002;
         public static final int mainContainer=0x7f090012;
-        public static final int ratingBar1=0x7f090016;
         public static final int tab_main_content=0x7f090004;
         public static final int tabhost=0x7f090003;
         public static final int tbxCategoryCount=0x7f090008;
@@ -122,6 +121,7 @@ public final class R {
         public static final int search=0x7f060004;
         public static final int separator=0x7f060009;
         public static final int settings=0x7f060006;
+        public static final int under_construction=0x7f06000e;
     }
     public static final class style {
         /** 

@@ -11,7 +11,8 @@
     <string name="expires_at">Expires at</string>
     <string name="separator">•</string>
     <string name="message_load_title">Loading</string>
-    <string name="message_load_loan_list">Please wait while loading list of available loans...</string>
-    <string name="message_load_category_list">Please wait while loading loan categories...</string>
-    <string name="message_load_loan_detail">Please wait while loading loan detail...</string>
+    <string name="message_load_loan_list">Please wait while loading list of available loans&#8230;</string>
+    <string name="message_load_category_list">Please wait while loading loan categories&#8230;</string>
+    <string name="message_load_loan_detail">Please wait while loading loan detail&#8230;</string>
+    <string name="under_construction">Under Construction</string>
 </resources>
