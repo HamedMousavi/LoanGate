@@ -49,12 +49,15 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	private FragmentManager _fragmentMan;
 	private ListView _lvwCategories;
 	private ListView _lvwLoans;
+	private View _selectedCatView;
+	private View _selectedLoanView;
 	
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
+			_selectedCatView = view;
 			_categoryAdapterView = parent;
 			_lvwCategories = (ListView) view.getParent();
 			HighlightListItem(_loanAdapterView, _selectedLoanIndex, false);
@@ -67,6 +70,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	{
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
+			_selectedLoanView = view;
 			_loanAdapterView = parent;
 			_lvwLoans = (ListView) view.getParent();
 			SelectLoan(position, false);
@@ -258,8 +262,16 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     	HighlightListItem(_lvwCategories, _selectedCategoryIndex);
     	HighlightListItem(_lvwLoans, _selectedLoanIndex);
 		
-    	//HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
-    	//HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
+    	HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
+    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
+
+		if (_selectedCatView != null) 
+		{
+			_selectedCatView.postInvalidate();
+			_selectedCatView.refreshDrawableState();
+		}
+		
+		if (_selectedLoanView != null) _selectedLoanView.postInvalidate();
 	}
 	
 	
