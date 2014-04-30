@@ -99,6 +99,7 @@ public class MainActivity extends FragmentActivity
             _tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
             _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
             Context context = _tabHost.getContext();
+            
             _tabHost.addTab(
             		_tabHost.newTabSpec("list").
             			setIndicator(createTabView(context,

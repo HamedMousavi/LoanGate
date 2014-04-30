@@ -79,14 +79,18 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 	{
         // Create & display view 
         ReBindCategories();
-		get_model().ReloadCategories();
+		if (get_model() != null) get_model().ReloadCategories();
 	}
 
 	
 	protected void ReBindCategories()
 	{
     	// Bind ListView to Categories
-		if (get_model().getCategories() != null) {
+		if (get_model() != null && 
+			get_model().getCategories() != null && 
+			_lvw_categories != null && 
+			_categoriesAdapter != null && 
+			_onCategoryItemClicked != null) {
 	    	_categoriesAdapter = new CategoryAdapter(
 	    			_lvw_categories.getContext(), R.layout.list_item_category, get_model().getCategories());
 	    	_lvw_categories.setItemsCanFocus(false);
