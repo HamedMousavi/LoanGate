@@ -18,12 +18,16 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.BackStackEntry;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Checkable;
+import android.widget.ListView;
 
 
 public class CategoryListTabFragment extends Fragment implements IObserver
@@ -41,6 +45,10 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	private AdapterView<?> _categoryAdapterView;
 	private AdapterView<?> _loanAdapterView;
 	private ProgressDialog _progressDialog;
+	private boolean _smallScreen;
+	private FragmentManager _fragmentMan;
+	private ListView _lvwCategories;
+	private ListView _lvwLoans;
 	
 
 	private AdapterView.OnItemClickListener _onCategoryItemClicked = new AdapterView.OnItemClickListener() 
@@ -48,6 +56,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
 			_categoryAdapterView = parent;
+			_lvwCategories = (ListView) view.getParent();
 			HighlightListItem(_loanAdapterView, _selectedLoanIndex, false);
 			SelectCategory(position, false);
 		}
@@ -59,6 +68,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
 			_loanAdapterView = parent;
+			_lvwLoans = (ListView) view.getParent();
 			SelectLoan(position, false);
 		}
 	};
@@ -108,6 +118,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	{
 		super();
 		Events.get_instance().RegisterEventObserver(this);
+		_smallScreen = false;
 	}
 	
 	
@@ -116,6 +127,8 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     {
 	    _view = inflater.inflate(R.layout.tab_page_category_list, container, false);
 		
+	    _smallScreen = (_view.findViewById(R.id.mainContainer) != null);
+
 	    if (savedInstanceState != null)
 		{
 			RestoreState(savedInstanceState);
@@ -124,9 +137,18 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 		{
 			SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_CAT_LIST);
 		}
-
+	    
 		return  _view;
     }
+	
+	
+	private void HighlightListItem(ListView list, int position)
+	{
+		if (list != null && position >= 0)
+		{
+			list.setItemChecked(position, true);
+		}
+	}
 
 
 	@Override
@@ -233,8 +255,11 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 
 	private void RestoreSelections() 
 	{
-    	HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
-    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
+    	HighlightListItem(_lvwCategories, _selectedCategoryIndex);
+    	HighlightListItem(_lvwLoans, _selectedLoanIndex);
+		
+    	//HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
+    	//HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
 	}
 	
 	
@@ -243,14 +268,72 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 		containerId = EnsureContainerMatch(containerId, fragmentId);
 		
 		_activeFragment = fragmentId.get_id();
-		FragmentManager fm = getChildFragmentManager();
+		if (_fragmentMan == null) 
+		{
+			CreateFragMentManager();
+		}
+
 		Fragment fragment = CreateFragment(fragmentId);
 		
-		FragmentTransaction transaction = fm.beginTransaction();
+		FragmentTransaction transaction = _fragmentMan.beginTransaction();
 		transaction.replace(containerId, fragment);
 		transaction.show(fragment);
-		transaction.addToBackStack(null);
+		if (_smallScreen && fragmentId != FragmentId.LOAN_CAT_LIST) 
+		{
+			transaction.addToBackStack(fragmentId.toString());
+		}
 		transaction.commit();
+
+	}
+
+
+	private void CreateFragMentManager() 
+	{
+		_fragmentMan = getChildFragmentManager();
+		_fragmentMan.addOnBackStackChangedListener(new OnBackStackChangedListener() 
+		{
+			  @Override
+			  public void onBackStackChanged() 
+			  {
+				  int backStackItemCount = _fragmentMan.getBackStackEntryCount();
+				  
+				  for (int i = 0; i < backStackItemCount; i++)
+				  {
+					BackStackEntry entry =  _fragmentMan.getBackStackEntryAt(i);
+					String fragId = entry.getName();
+					Log.d("BackFragment:", fragId);
+				  }
+				  /**
+			    if (rootFragmentManager.findFragmentByTag(FAKE_BACKSTACK_ENTRY) == null) {
+			      getFragmentManager().popBackStack();
+			      rootFragmentManager.removeOnBackStackChangedListener(this);
+			    }
+			    */
+			  }
+		});
+		
+		getFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener() 
+		{
+			  @Override
+			  public void onBackStackChanged() 
+			  {
+				  int backStackItemCount = _fragmentMan.getBackStackEntryCount();
+				  if (backStackItemCount > 0)
+				  {
+					  _fragmentMan.popBackStack();
+				  }
+				  else
+				  {
+					getFragmentManager().removeOnBackStackChangedListener(this);
+				  }
+				  /**
+			    if (rootFragmentManager.findFragmentByTag(FAKE_BACKSTACK_ENTRY) == null) {
+			      getFragmentManager().popBackStack();
+			      rootFragmentManager.removeOnBackStackChangedListener(this);
+			    }
+			    */
+			  }
+		});
 	}
 
 
@@ -334,6 +417,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	    if (updateGui)
 	    {
 	    	HighlightListItem(_categoryAdapterView, _selectedCategoryIndex, true);
+	    	HighlightListItem(_lvwCategories, position);
 	    }
 	}
 
@@ -348,6 +432,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	    if (updateGui)
 	    {
 	    	HighlightListItem(_loanAdapterView, _selectedLoanIndex, true);
+	    	HighlightListItem(_lvwLoans, position);
 	    }
 	}
 
