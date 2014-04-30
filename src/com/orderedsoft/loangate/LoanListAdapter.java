@@ -44,6 +44,11 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 		else // A second visit, use last visit data
 		{
 			info = (LoanItemViewControls)view.getTag();
+			if (info == null)
+			{
+				info = new LoanItemViewControls();
+				view = CreateView(info);
+			}
 		}
 		
 		Loan item = _items.get(position);
@@ -74,6 +79,8 @@ public class LoanListAdapter extends ArrayAdapter<Loan> {
 		info.set_tbxLoanExpiration((TextView)view.findViewById(R.id.tbxLoanExpiration));
 		info.set_tbxLoanTitle((TextView)view.findViewById(R.id.tbxLoanTitle));
 
+		view.setTag(info);
+		
 		return view;
 	}
 }

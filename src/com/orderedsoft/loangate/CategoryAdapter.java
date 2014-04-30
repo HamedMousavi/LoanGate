@@ -59,6 +59,11 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		else // A second visit, use last visit data
 		{
 			info = (CategoryItemViewControls)view.getTag();
+			if (info == null)
+			{
+				info = new CategoryItemViewControls();
+				view = CreateView(info);
+			}
 		}
 		
 		LoanCategory item = _items.get(position);
@@ -87,6 +92,8 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		info.setCategoryModified((TextView)view.findViewById(R.id.tbxCategoryModified));
 		info.setCategoryTitle((TextView)view.findViewById(R.id.tbxCategoryTitle));
 
+		view.setTag(info);
+		
 		return view;
 	}
 }
