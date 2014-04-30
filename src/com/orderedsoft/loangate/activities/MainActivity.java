@@ -10,7 +10,9 @@ import com.orderedsoft.loangate.navigation.SettingsTabFragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,53 @@ public class MainActivity extends FragmentActivity
     	SetupTabLayout(savedInstanceState);
 	}
 
+/**	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+	    if (keyCode == KeyEvent.KEYCODE_BACK)
+	    {
+	    	if (_tabHost.getCurrentTabTag() == "list")
+	    	{
+	    	}
+	    	
+	        if (getSupportFragmentManager().getBackStackEntryCount() == 0)
+	        {
+	            this.finish();
+	            return false;
+	        }
+	        else
+	        {
+	            getSupportFragmentManager().popBackStack();
+	            removeCurrentFragment();
+
+	            return false;
+	        }
+        
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
+*/	
+	
+	
+	@Override
+	public void onBackPressed() {
+	    // if there is a fragment and the back stack of this fragment is not empty,
+	    // then emulate 'onBackPressed' behaviour, because in default, it is not working
+	    FragmentManager fm = getSupportFragmentManager();
+	    for (Fragment frag : fm.getFragments()) {
+	        if (frag.isVisible()) {
+	            FragmentManager childFm = frag.getChildFragmentManager();
+	            if (childFm.getBackStackEntryCount() > 0) {
+	                childFm.popBackStack();
+	                return;
+	            }
+	        }
+	    }
+	    super.onBackPressed();
+	}
+	
 	
 	private void SetupTabLayout(Bundle savedInstanceState)
 	{

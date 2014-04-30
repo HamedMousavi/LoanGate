@@ -18,10 +18,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.BackStackEntry;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -302,6 +299,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	private void CreateFragMentManager() 
 	{
 		_fragmentMan = getChildFragmentManager();
+		/**
 		_fragmentMan.addOnBackStackChangedListener(new OnBackStackChangedListener() 
 		{
 			  @Override
@@ -315,37 +313,14 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 					String fragId = entry.getName();
 					Log.d("BackFragment:", fragId);
 				  }
-				  /**
+				  
 			    if (rootFragmentManager.findFragmentByTag(FAKE_BACKSTACK_ENTRY) == null) {
 			      getFragmentManager().popBackStack();
 			      rootFragmentManager.removeOnBackStackChangedListener(this);
 			    }
-			    */
+			    
 			  }
-		});
-		
-		getFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener() 
-		{
-			  @Override
-			  public void onBackStackChanged() 
-			  {
-				  int backStackItemCount = _fragmentMan.getBackStackEntryCount();
-				  if (backStackItemCount > 0)
-				  {
-					  _fragmentMan.popBackStack();
-				  }
-				  else
-				  {
-					getFragmentManager().removeOnBackStackChangedListener(this);
-				  }
-				  /**
-			    if (rootFragmentManager.findFragmentByTag(FAKE_BACKSTACK_ENTRY) == null) {
-			      getFragmentManager().popBackStack();
-			      rootFragmentManager.removeOnBackStackChangedListener(this);
-			    }
-			    */
-			  }
-		});
+		});*/
 	}
 
 
