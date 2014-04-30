@@ -19,7 +19,7 @@ public class LoanListViewModel implements IObserver
 	public void ReloadLoans(long loanId) {
 		Events.get_instance().RegisterEventObserver(this);
 
-		_proxy = new LoansProxy("http://10.0.2.2/LoanGate/api/loanlist/" + Long.toString(loanId));
+		_proxy = new LoansProxy(AppSettings.get_loanListUrl() + Long.toString(loanId));
 		_proxy.Load();
 	}
 

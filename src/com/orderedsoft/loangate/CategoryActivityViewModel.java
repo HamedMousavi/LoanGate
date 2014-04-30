@@ -18,7 +18,7 @@ public class CategoryActivityViewModel implements IObserver
 	{
 		Events.get_instance().RegisterEventObserver(this);
 
-		_proxy = new CategoriesProxy("http://10.0.2.2/LoanGate/api/loancategories");
+		_proxy = new CategoriesProxy(AppSettings.get_loanCtegoriesUrl());
 		_proxy.LoadCategories();
 	}
 

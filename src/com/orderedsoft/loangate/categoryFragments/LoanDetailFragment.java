@@ -3,6 +3,7 @@
  */
 package com.orderedsoft.loangate.categoryFragments;
 
+import com.orderedsoft.loangate.AppSettings;
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.models.Loan;
 
@@ -25,7 +26,7 @@ public class LoanDetailFragment extends Fragment
 	
 	public void SetLoan(Loan loan) 
 	{
-		_uri = Uri.parse("http://10.0.2.2/LoanGate/LoanDetail/Catalog/" + Long.toString(loan.getId()));
+		_uri = Uri.parse( AppSettings.get_loanDetailUrl() + Long.toString(loan.getId()));
 	}
 
 
