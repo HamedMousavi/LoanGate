@@ -89,7 +89,6 @@ public class LoanCategoryListFragment extends Fragment  implements IObserver
 		if (get_model() != null && 
 			get_model().getCategories() != null && 
 			_lvw_categories != null && 
-			_categoriesAdapter != null && 
 			_onCategoryItemClicked != null) {
 	    	_categoriesAdapter = new CategoryAdapter(
 	    			_lvw_categories.getContext(), R.layout.list_item_category, get_model().getCategories());
