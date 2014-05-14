@@ -49,32 +49,6 @@
         android:textStyle="bold"
         android:text="@string/search" />
 
-    <TextView 
-        android:id="@+id/tbxSeparator1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/tbxCategoryCount"
-        android:layout_toStartOf="@+id/tbxCategoryCount"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/dark_gray_light"
-        android:textSize="24sp"
-        android:paddingRight="10sp"
-        android:paddingLeft="10sp"
-        android:paddingStart="10sp"
-        android:paddingEnd="10sp"
-        android:text="@string/separator" />
-
-    <TextView 
-        android:id="@+id/tbxCategoryModified"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/tbxSeparator1"
-        android:layout_toLeftOf="@+id/tbxSeparator1"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/dark_gray_light"
-        android:textSize="14sp"
-        android:text="@string/notify" />
-    
     <TextView
         android:id="@+id/tbxCategoryDescription"
         android:layout_width="wrap_content"

@@ -18,6 +18,13 @@ public class CategoryActivityViewModel implements IObserver
 	{
 		Events.get_instance().RegisterEventObserver(this);
 
+		// Clear current list
+		//if (_categories != null)
+		//{
+		//	_categories.clear();
+		//	setCategories(_categories);
+		//}
+
 		_proxy = new CategoriesProxy(AppSettings.get_loanCtegoriesUrl());
 		_proxy.LoadCategories();
 	}
@@ -34,8 +41,8 @@ public class CategoryActivityViewModel implements IObserver
 	/**
 	 * @param _categories the _categories to set
 	 */
-	private void setCategories(List<LoanCategory> _categories) {
-		this._categories = _categories;
+	private void setCategories(List<LoanCategory> categories) {
+		this._categories = categories;
 		Events.get_instance().SendEvent(Events.CategoriesLoadCompleted, this, _categories);
 	}
 	

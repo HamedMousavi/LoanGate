@@ -14,7 +14,10 @@ import com.orderedsoft.loangate.models.LoanCategory;
 
 import HLib.IObserver;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -182,10 +185,8 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     	HideMessageBox();
     	super.onPause();
     }
-	
-		
 
-
+    
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
@@ -455,7 +456,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	
 	private void setSelectedLoan(Loan loan)
 	{
-		_selectedLoan = loan;
+		if (loan != null) _selectedLoan = loan;
 	}
 
 
@@ -492,6 +493,66 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 			eventId == Events.LoanDetailLoadCompleted)
 		{
 			HideMessageBox();
+			if (params == null)
+			{
+				ShowNetworkError(eventId);
+			}
+		}
+	}
+
+
+	private void ShowNetworkError(final int eventId) {
+		
+		String title = getString(R.string.network_error_title);
+		String message = getString(R.string.network_error_message);
+		String retry = getString(R.string.retry);
+		String cancel = getString(R.string.cancel);
+		
+	      AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+	      dialog.setTitle(title);
+	      dialog.setMessage(message);                        
+	      dialog.setIcon(android.R.drawable.ic_dialog_alert);
+	      dialog.setPositiveButton(retry,
+	           new OnClickListener() {
+	              public void onClick(DialogInterface dialog, int which) {
+	                 dialog.dismiss();
+	                 Reload(eventId);
+	              }
+	           });
+	      dialog.setNegativeButton(cancel,
+		           new OnClickListener() {
+              public void onClick(DialogInterface dialog, int which) {
+                 dialog.dismiss();
+              }
+           });
+	      dialog.show();
+	}
+
+	
+	private void Reload(int eventId) {
+		switch(eventId)
+		{
+		case Events.CategoriesLoadCompleted:
+			if (_loanCategoryListFragment != null)
+			{
+				MessageBox(R.string.message_load_title, R.string.message_load_category_list);
+				_loanCategoryListFragment.get_model().ReloadCategories();
+			}
+			break;
+		case Events.LoanDetailLoadCompleted:
+			if (_loanDetailFragment != null)
+			{
+				MessageBox(R.string.message_load_title, R.string.message_load_loan_detail);
+				_loanDetailFragment.SetLoan(getSelectedLoan());
+			}
+			break;
+		case Events.LoanListLoadCompleted:
+			if (_loanListFragment != null)
+			{
+				MessageBox(R.string.message_load_title, R.string.message_load_loan_list);
+				_loanListFragment.setLoanCategory(getSelectedCategory());
+			}
+			break;
 		}
 	}
 }

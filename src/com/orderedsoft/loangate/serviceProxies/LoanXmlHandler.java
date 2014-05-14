@@ -28,6 +28,7 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 	private StringBuilder _chars;
 	private Loan _currentLoan;
 	private List<Loan> _list;
+	private boolean _inLoan;
 
 
 	@Override
@@ -35,6 +36,7 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 	{
 		try {
 			super.startDocument();
+			_inLoan = false;
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,11 +68,11 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 		
 			if (localName.equalsIgnoreCase(ITEM))
 			{
+				_inLoan = true;
 				_currentLoan = new Loan();
 			}
-			else if (localName.equalsIgnoreCase(AMOUNTPARENT))
+			else if(localName.equalsIgnoreCase(AMOUNTPARENT))
 			{
-				// do nothing
 			}
 
 		} catch (SAXException e) {
@@ -85,6 +87,7 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 	{
 		try {
 			super.endElement(uri, localName, qName);
+			if (!_inLoan) return;
 		
 			if (localName.equalsIgnoreCase(TITLE))
 			{
@@ -109,6 +112,7 @@ public class LoanXmlHandler extends WebServiceHandler<List<Loan>> {
 			else if (localName.equalsIgnoreCase(ITEM))
 			{
 				_list.add(_currentLoan);
+				_inLoan = false;
 			}
 
 		} catch (SAXException e) {

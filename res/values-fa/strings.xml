@@ -10,10 +10,15 @@
     <string name="settings">تنظیمات</string>
     <string name="category_icon_description">تصویر دسته بندی</string>
     <string name="expires_at">انقضا</string>
+    <string name="view_all">دیدن هر </string>
     <string name="separator">•</string>
     <string name="message_load_title">دریافت اطلاعات</string>
     <string name="message_load_loan_list">برنامه در حال دریافت اطلاعات وامها است، لطفا کمی منتظر بمانید&#8230;</string>
     <string name="message_load_category_list">برنامه در حال دریافت اطلاعات انواع وام موجود است. لطفا منتظر بمانید&#8230;</string>
     <string name="message_load_loan_detail">برنامه در حال دریافت جزئیات وام انتخابی است. لطفا منتظر بمانید&#8230;</string>
     <string name="under_construction">در حال ساخت</string>
+    <string name="network_error_title">خطا</string>
+    <string name="network_error_message">ارتباط با سرور از طریق اینترنت ناممکن است.</string>
+    <string name="retry">تلاش مجدد</string>
+    <string name="cancel">انصراف</string>
 </resources>

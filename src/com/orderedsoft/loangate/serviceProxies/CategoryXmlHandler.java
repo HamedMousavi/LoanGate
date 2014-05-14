@@ -16,6 +16,7 @@ import HLib.WebServiceHandler;
 public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 {
 	
+	// WARNING: IN CASE OF CHANGES IN BELOW LIST, UPDATE 'DetectIgnorable' METHOD
 	private static final String NAME = "Name";
 	private static final String ID = "Id";
 	private static final String MODIFIED = "LastModified";
@@ -25,6 +26,8 @@ public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 	private StringBuilder _chars;
 	private LoanCategory _currentLoan;
 	private List<LoanCategory> _categories;
+	private boolean _inLoanCategory;
+	private int _started;
 
 
 	@Override
@@ -32,8 +35,9 @@ public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 	{
 		try {
 			super.startDocument();
+			_inLoanCategory = false;
+			_started = 0;
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		_categories = new ArrayList<LoanCategory>();
@@ -47,7 +51,6 @@ public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 		try {
 			super.endDocument();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -61,23 +64,32 @@ public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 		try {
 			super.startElement(uri, localName, qName, attributes);
 		
+			if (_inLoanCategory) _started += 1;
 			if (localName.equalsIgnoreCase(ITEM))
 			{
+				_inLoanCategory = true;
 				_currentLoan = new LoanCategory();
 			}
+			
+			//DetectIgnorable(localName);
 
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	@Override
 	public void endElement(String uri, String localName, String qName) 
 	{
 		try {
 			super.endElement(uri, localName, qName);
+			if (!_inLoanCategory) return;
+
+			// Ignore nested elements
+			_started -= 1;
+			if (_started > 0) return;
 		
 			if (localName.equalsIgnoreCase(NAME))
 			{
@@ -102,6 +114,8 @@ public class CategoryXmlHandler extends WebServiceHandler<List<LoanCategory>>
 			else if (localName.equalsIgnoreCase(ITEM))
 			{
 				_categories.add(_currentLoan);
+				_inLoanCategory = false;
+				_started = 0;
 			}
 
 		} catch (SAXException e) {

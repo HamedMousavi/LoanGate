@@ -18,6 +18,13 @@ public class LoanListViewModel implements IObserver
 
 	public void ReloadLoans(long loanId) {
 		Events.get_instance().RegisterEventObserver(this);
+		
+		// Clear current list
+		if (_loans != null)
+		{
+			_loans.clear();
+			//setLoans(_loans);
+		}
 
 		_proxy = new LoansProxy(AppSettings.get_loanListUrl() + Long.toString(loanId));
 		_proxy.Load();
@@ -51,8 +58,10 @@ public class LoanListViewModel implements IObserver
 	}
 
 	public Loan getLoan(int position) {
-		// TODO Auto-generated method stub
-		return getLoans().get(position);
+		List<Loan> loans = getLoans();
+		if (loans == null) return null;
+		
+		return loans.get(position);
 	}
 }
 /**

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.orderedsoft.loangate.models.LoanCategory;
 
-import HLib.Convert;
+//import HLib.Convert;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,10 +74,11 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 
 	
 	private void ExchangeData(CategoryItemViewControls info, LoanCategory item) {
-		info.getCategoryCount().setText("View all " + Integer.toString(item.getLoanerCount()));
+		String expLabel = (String) _context.getResources().getText(R.string.view_all);
+		info.getCategoryCount().setText(expLabel + Integer.toString(item.getLoanerCount()));
 		info.getCategoryDescription().setText(item.getDescription());
 		info.getCategoryIcon().setImageResource(_imageId[(int) item.getId()]);
-		info.getCategoryModified().setText(Convert.ToString(item.getLastModified()));
+		//info.getCategoryModified().setText(Convert.ToString(item.getLastModified()));
 		info.getCategoryTitle().setText(item.getName());
 	}
 
@@ -89,7 +90,7 @@ public class CategoryAdapter extends ArrayAdapter<LoanCategory> {
 		info.setCategoryCount((TextView)view.findViewById(R.id.tbxCategoryCount));
 		info.setCategoryDescription((TextView)view.findViewById(R.id.tbxCategoryDescription));
 		info.setCategoryIcon((ImageView)view.findViewById(R.id.ivwCategoryIcon));
-		info.setCategoryModified((TextView)view.findViewById(R.id.tbxCategoryModified));
+		//info.setCategoryModified((TextView)view.findViewById(R.id.tbxCategoryModified));
 		info.setCategoryTitle((TextView)view.findViewById(R.id.tbxCategoryTitle));
 
 		view.setTag(info);
