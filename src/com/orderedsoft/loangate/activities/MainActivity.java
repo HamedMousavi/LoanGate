@@ -3,6 +3,7 @@ package com.orderedsoft.loangate.activities;
 
 import com.orderedsoft.loangate.R;
 import com.orderedsoft.loangate.navigation.CategoryListTabFragment;
+import com.orderedsoft.loangate.navigation.GiftsTabFragment;
 import com.orderedsoft.loangate.navigation.NotifyTabFragment;
 import com.orderedsoft.loangate.navigation.SearchTabFragment;
 import com.orderedsoft.loangate.navigation.SettingsTabFragment;
@@ -106,6 +107,13 @@ public class MainActivity extends FragmentActivity
             					getResources().getText(R.string.list), 
             					getResources().getDrawable(R.drawable.list))),
                     CategoryListTabFragment.class, null);
+            
+            _tabHost.addTab(
+            		_tabHost.newTabSpec("gifts").
+            			setIndicator(createTabView(context,
+            					getResources().getText(R.string.gifts), 
+            					getResources().getDrawable(R.drawable.gift))),
+                    GiftsTabFragment.class, null);
 
             _tabHost.addTab(
             		_tabHost.newTabSpec("search").

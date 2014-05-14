@@ -46,23 +46,24 @@ public final class R {
         public static final int car=0x7f020003;
         public static final int chart=0x7f020004;
         public static final int education=0x7f020005;
-        public static final int graduation=0x7f020006;
-        public static final int home=0x7f020007;
-        public static final int list=0x7f020008;
-        public static final int list_item_background=0x7f020009;
-        public static final int manufactory=0x7f02000a;
-        public static final int money=0x7f02000b;
-        public static final int plane=0x7f02000c;
-        public static final int repair=0x7f02000d;
-        public static final int ring=0x7f02000e;
-        public static final int search=0x7f02000f;
-        public static final int settings=0x7f020010;
-        public static final int store=0x7f020011;
-        public static final int tab_header_background=0x7f020012;
-        public static final int tab_header_divider=0x7f020013;
-        public static final int tab_header_foreground=0x7f020014;
-        public static final int tab_header_led=0x7f020015;
-        public static final int wedding=0x7f020016;
+        public static final int gift=0x7f020006;
+        public static final int graduation=0x7f020007;
+        public static final int home=0x7f020008;
+        public static final int list=0x7f020009;
+        public static final int list_item_background=0x7f02000a;
+        public static final int manufactory=0x7f02000b;
+        public static final int money=0x7f02000c;
+        public static final int plane=0x7f02000d;
+        public static final int repair=0x7f02000e;
+        public static final int ring=0x7f02000f;
+        public static final int search=0x7f020010;
+        public static final int settings=0x7f020011;
+        public static final int store=0x7f020012;
+        public static final int tab_header_background=0x7f020013;
+        public static final int tab_header_divider=0x7f020014;
+        public static final int tab_header_foreground=0x7f020015;
+        public static final int tab_header_led=0x7f020016;
+        public static final int wedding=0x7f020017;
     }
     public static final class id {
         public static final int action_settings=0x7f090016;
@@ -98,9 +99,10 @@ public final class R {
         public static final int list_item_loan=0x7f030005;
         public static final int tab_host_header=0x7f030006;
         public static final int tab_page_category_list=0x7f030007;
-        public static final int tab_page_notify=0x7f030008;
-        public static final int tab_page_search=0x7f030009;
-        public static final int tab_page_settings=0x7f03000a;
+        public static final int tab_page_gifts=0x7f030008;
+        public static final int tab_page_notify=0x7f030009;
+        public static final int tab_page_search=0x7f03000a;
+        public static final int tab_page_settings=0x7f03000b;
     }
     public static final class menu {
         public static final int category=0x7f080000;
@@ -108,19 +110,20 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int category_icon_description=0x7f060007;
-        public static final int expires_at=0x7f060008;
+        public static final int category_icon_description=0x7f060008;
+        public static final int expires_at=0x7f060009;
+        public static final int gifts=0x7f060004;
         public static final int hello_world=0x7f060002;
         public static final int list=0x7f060003;
-        public static final int message_load_category_list=0x7f06000c;
-        public static final int message_load_loan_detail=0x7f06000d;
-        public static final int message_load_loan_list=0x7f06000b;
-        public static final int message_load_title=0x7f06000a;
-        public static final int notify=0x7f060005;
-        public static final int search=0x7f060004;
-        public static final int separator=0x7f060009;
-        public static final int settings=0x7f060006;
-        public static final int under_construction=0x7f06000e;
+        public static final int message_load_category_list=0x7f06000d;
+        public static final int message_load_loan_detail=0x7f06000e;
+        public static final int message_load_loan_list=0x7f06000c;
+        public static final int message_load_title=0x7f06000b;
+        public static final int notify=0x7f060006;
+        public static final int search=0x7f060005;
+        public static final int separator=0x7f06000a;
+        public static final int settings=0x7f060007;
+        public static final int under_construction=0x7f06000f;
     }
     public static final class style {
         /** 
