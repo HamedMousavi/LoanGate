@@ -145,7 +145,8 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 
 	    if (savedInstanceState != null)
 		{
-			RestoreState(savedInstanceState);
+			//RestoreState(savedInstanceState);
+			SetActiveFragment(R.id.mainContainer, FragmentId.LOAN_CAT_LIST);
 		}
 		else if (_activeFragment == -1)
 		{
@@ -219,7 +220,10 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	    
 	    HideMessageBox();
 	    _progressDialog = null;
-	    _networkErrorDialog = null;
+
+		Events.get_instance().UnRegisterEventObserver(this);
+	    
+	    //_networkErrorDialog = null;
 	    //_context = null;
 	    //_activeFragment = -1;
 	    
@@ -238,15 +242,15 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     {
         super.onResume();
 
-		RestoreSelections();
+		//RestoreSelections();
     }
 
 
-	@Override
-    public void onSaveInstanceState (Bundle outState) {
-        super.onSaveInstanceState(outState);
-        SaveState(outState);
-    }
+	//@Override
+    //public void onSaveInstanceState (Bundle outState) {
+    //    super.onSaveInstanceState(outState);
+    //    SaveState(outState);
+    //}
 
 	
 	private void SaveState(Bundle outState) 
@@ -352,7 +356,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 
 	private int EnsureContainerMatch(int containerId, FragmentId fragmentId) 
 	{
-		if (_view == null) return containerId;
+		if (_view == null || fragmentId == null) return containerId;
 /**		
 	    LoanListFragment detailFragment = (LoanListFragment) 
 	    		getChildFragmentManager().findFragmentById(R.id.loanListFragment);

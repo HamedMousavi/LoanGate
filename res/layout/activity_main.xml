@@ -23,6 +23,7 @@
 		<LinearLayout android:layout_width="match_parent" android:layout_height="3dp" android:background="@color/dark_lit_led_background" />
 		
 		<!-- In 10 years of programming, I've never seen such a weired framework! Real content go here. -->
+
         <FrameLayout
             android:id="@+id/tab_main_content"
             android:layout_width="match_parent"

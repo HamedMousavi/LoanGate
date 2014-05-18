@@ -15,8 +15,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,15 +28,17 @@ public class MainActivity extends FragmentActivity
 {
 
 	 private FragmentTabHost _tabHost;
+	private FragmentActivity _context;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) 
     {
-        super.onCreate(savedInstanceState);
-        
     	setContentView(R.layout.activity_main);
-    	
-    	SetupTabLayout(savedInstanceState);
+		SetupTabLayout(savedInstanceState);
+
+		super.onCreate(savedInstanceState);
+        
+    	//SetupTabLayout(savedInstanceState);
 	}
 
 /**	
@@ -84,6 +89,32 @@ public class MainActivity extends FragmentActivity
 	}
 	
 	
+	@Override
+    public void onAttachFragment(Fragment fragment) 
+	{
+        super.onAttachFragment(fragment);
+
+		_context = fragment.getActivity();
+	}  
+	
+	
+	/*
+	@Override
+	public View onCreateView(View parent, String name, Context context, AttributeSet attrs)
+	{
+		//super.onCreateView(name, context, attrs);
+		super.onCreateView(parent, name, context, attrs)
+		
+	    _tabHost = new FragmentTabHost(_context);
+	    parent.inflate(R.layout.tabc, _tabHost);
+	    _tabHost.setup(_context, _context.getChildFragmentManager(), android.R.id.tabcontent);
+
+	    _tabHost.addTab(tabHost.newTabSpec("simple").setIndicator("Simple"), ActivityLogFragment.class, null);
+	    _tabHost.addTab(tabHost.newTabSpec("contacts").setIndicator("Contacts"), MiniStatementFragment.class, null);
+	    return _tabHost;
+	}	*/
+	
+	
 	private void SetupTabLayout(Bundle savedInstanceState)
 	{
 		// Check that the activity is using the layout version with
@@ -93,12 +124,19 @@ public class MainActivity extends FragmentActivity
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
+            //if (savedInstanceState != null) {
+            //    return;
+            //}
 
             _tabHost = (FragmentTabHost) findViewById(R.id.tabhost);
+            if (_tabHost == null) return;
+            
             _tabHost.setup(this, getSupportFragmentManager(), R.id.tab_main_content);
+
+            int count = _tabHost.getChildCount();
+            if (count >= 5) return;
+
+            _tabHost.clearAllTabs();
             Context context = _tabHost.getContext();
             
             _tabHost.addTab(
@@ -135,6 +173,10 @@ public class MainActivity extends FragmentActivity
         					getResources().getText(R.string.settings), 
         					getResources().getDrawable(R.drawable.settings))),
                     SettingsTabFragment.class, null);
+        }
+        else
+        {
+        	Log.d("FUCK", "FUCK! CAN'T FIND IT!!");
         }
 	}
 	
