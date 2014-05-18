@@ -15,6 +15,7 @@ import com.orderedsoft.loangate.models.LoanCategory;
 import HLib.IObserver;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -76,6 +77,15 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 			SelectLoan(position, false);
 		}
 	};
+	private Builder _networkErrorDialog;
+	private OnClickListener _networkErrorOnRetry = new OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+	           dialog.dismiss();
+	           Reload();
+	        }
+	     };
+	private int _reloadId;
+	private Activity _context;
 
 	
 	// This defines dynamic fragments that might present in
@@ -160,8 +170,6 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	{
     	// Create menu
 		super.onCreate(savedInstanceState);
-
-		_progressDialog = new ProgressDialog(getActivity());
 	}
 	
 
@@ -169,6 +177,9 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     public void onAttach(Activity activity) 
 	{
         super.onAttach(activity);
+
+		_context = activity;
+		if (_progressDialog == null) _progressDialog = new ProgressDialog(_context);
 	}   
 
 	
@@ -186,6 +197,13 @@ public class CategoryListTabFragment extends Fragment implements IObserver
     	super.onPause();
     }
 
+	
+	@Override
+    public void onStop()
+    {
+		super.onStop();
+    }	
+
     
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
@@ -198,6 +216,13 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	public void onDestroyView() 
 	{
 	    super.onDestroyView();
+	    
+	    HideMessageBox();
+	    _progressDialog = null;
+	    _networkErrorDialog = null;
+	    //_context = null;
+	    //_activeFragment = -1;
+	    
 	    /**
 	    if (_view != null) {
 	        ViewGroup parentViewGroup = (ViewGroup) _view.getParent();
@@ -428,8 +453,8 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 	private void MessageBox(int messageTitle, int messageContent) 
 	{
 		_progressDialog.setCancelable(false);
-		_progressDialog.setTitle(getActivity().getResources().getText(messageTitle));
-		_progressDialog.setMessage(getActivity().getResources().getText(messageContent));
+		_progressDialog.setTitle(_context.getString(messageTitle));
+		_progressDialog.setMessage(_context.getString(messageContent));
 		_progressDialog.show();
 	}
 
@@ -478,7 +503,7 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 
 	private void HideMessageBox() 
 	{
-		if (_progressDialog.isShowing()) 
+		if (_progressDialog != null && _progressDialog.isShowing()) 
     	{
 			_progressDialog.dismiss();
         }
@@ -502,35 +527,43 @@ public class CategoryListTabFragment extends Fragment implements IObserver
 
 
 	private void ShowNetworkError(final int eventId) {
+		if(_context == null || _context.isFinishing())
+		{
+		    //show dialog
+			return;
+		}
 		
+		if (_networkErrorDialog == null) {
+			CreateNetworkErrorDialog();
+		}
+		
+		_reloadId = eventId;
+		_networkErrorDialog.show();
+	}
+
+	
+	private void CreateNetworkErrorDialog() {
 		String title = getString(R.string.network_error_title);
 		String message = getString(R.string.network_error_message);
 		String retry = getString(R.string.retry);
 		String cancel = getString(R.string.cancel);
-		
-	      AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-	      dialog.setTitle(title);
-	      dialog.setMessage(message);                        
-	      dialog.setIcon(android.R.drawable.ic_dialog_alert);
-	      dialog.setPositiveButton(retry,
-	           new OnClickListener() {
-	              public void onClick(DialogInterface dialog, int which) {
-	                 dialog.dismiss();
-	                 Reload(eventId);
-	              }
-	           });
-	      dialog.setNegativeButton(cancel,
-		           new OnClickListener() {
-              public void onClick(DialogInterface dialog, int which) {
-                 dialog.dismiss();
-              }
-           });
-	      dialog.show();
+
+		_networkErrorDialog = new AlertDialog.Builder(_context);
+		_networkErrorDialog.setTitle(title);
+		_networkErrorDialog.setMessage(message);                        
+		_networkErrorDialog.setIcon(android.R.drawable.ic_dialog_alert);
+		_networkErrorDialog.setPositiveButton(retry, _networkErrorOnRetry);
+		_networkErrorDialog.setNegativeButton(cancel,
+				new OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						}
+		});
 	}
 
-	
-	private void Reload(int eventId) {
-		switch(eventId)
+
+	private void Reload() {
+		switch(_reloadId)
 		{
 		case Events.CategoriesLoadCompleted:
 			if (_loanCategoryListFragment != null)
